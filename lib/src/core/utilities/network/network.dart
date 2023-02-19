@@ -1,1 +1,1 @@
-export 'custom_dio/custom_dio.dart';
+export './custom_dio/custom_dio.dart';

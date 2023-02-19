@@ -1,41 +1,30 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:aether_app/src/core/utilities/network/network.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final dioClient = DioClient();
+  final dioClient = Dio().withVanillaInterceptors();
 
-  setUpAll(() {
-    // ↓ required to avoid HTTP error 400 mocked returns
-    HttpOverrides.global = null;
-  });
+  setUpAll(
+    () {
+      // ↓ required to avoid HTTP error 400 mocked returns
+      HttpOverrides.global = null;
+    },
+  );
+
   group(
     'Test custom_dio',
     () {
-      test(
-        'Test Singleton class Creation',
-        () {
-          final dioClient1 = DioClient();
-          final dioClient2 = DioClient();
-
-          // Validate that the 2 dio instances are the same
-          expect(
-            identical(dioClient1.dioClient, dioClient2.dioClient),
-            isTrue,
-          );
-        },
-      );
-
       group(
         'Test Dio interceptors',
         () {
           test(
             'Test UserAgentInterceptor',
             () async {
-              final response =
-                  await dioClient.dioClient.get('https://example.com/');
+              final response = await dioClient.get('https://example.com/');
               // Gets the request headers from the response
               final containsUserAgent =
                   response.requestOptions.headers.containsKey('User-agent');
@@ -46,6 +35,26 @@ void main() {
               );
             },
           );
+
+          test(
+            'Test RateLimitInterceptor',
+            () async {
+              final newDioClient = Dio().withRateLimit(2);
+              // start time
+              final startTime = DateTime.now().millisecondsSinceEpoch;
+              await newDioClient.get('https://example.com/');
+              await newDioClient.get('https://example.com/');
+              final endTime = DateTime.now().millisecondsSinceEpoch;
+
+              final timeDiffrence = endTime - startTime;
+
+              // Expect that the time diffrence between the requests is more than 2000 milliseconds
+              expect(timeDiffrence, greaterThanOrEqualTo(2000));
+            },
+          );
+
+          // CloudflareInterceptor cannot be tested here as it needs a device with platform channels to run
+          // therefore it has been tested manually and it seems to be working... ¯\_(ツ)_/¯
         },
       );
     },

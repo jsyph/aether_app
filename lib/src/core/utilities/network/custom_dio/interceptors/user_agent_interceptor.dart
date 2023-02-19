@@ -14,7 +14,6 @@ class UserAgentInterceptor extends Interceptor {
         },
       );
     }
-
     return handler.next(options);
   }
 }
