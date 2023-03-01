@@ -1,6 +1,6 @@
-import 'package:aether_app/src/core/utilities/network/network.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:custom_dio/custom_dio.dart';
 
 void main() {
   runApp(const MyApp());
@@ -78,17 +78,18 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: FutureBuilder(
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Text(snapshot.data!.data.toString());
-          } 
-          return const CircularProgressIndicator();
-        },
-        future: Dio().withVanillaInterceptors().get('https://realmscans.com/'),
-      )),
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: FutureBuilder(
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Text(snapshot.data!.data.toString());
+            }
+            return const CircularProgressIndicator();
+          },
+          future: Dio().bypassCloudflare().get('https://realmscans.com/'),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',

@@ -12,11 +12,22 @@ class WebViewInterceptor extends Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     logger.d('Getting page using webview for ${options.uri.toString()}');
 
+    // Exit interceptor IF the request method is not `GET`
+    if (options.method != 'GET') {
+      return handler.next(options);
+    }
+
     // Stream controller to get page content
     final pageContentStreamController = StreamController<String>();
 
     // Create webview
     final webView = HeadlessInAppWebView(
+      initialOptions: InAppWebViewGroupOptions(
+        crossPlatform: InAppWebViewOptions(
+          userAgent:
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0',
+        ),
+      ),
       initialUrlRequest: URLRequest(
         url: options.uri,
         body: options.data,
@@ -56,6 +67,6 @@ class WebViewInterceptor extends Interceptor {
 
     // Resolve the request
     logger.v('Resolved request');
-    handler.resolve(response);
+    return handler.resolve(response);
   }
 }

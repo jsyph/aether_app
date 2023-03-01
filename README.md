@@ -1,16 +1,20 @@
-# aether_app
+# ✨ Aether App
 
-Cool Manga Reader
+## 🚗 Road Map
+  - ### Version 0.1:
+    Search and browse popular manga from MangaDex
 
-## Getting Started
+  - ### Version 0.2:
+    Search, browse popular manga and recently updated manga from every source
 
-This project is a starting point for a Flutter application.
+  - ### Version 0.3:
+    Read chapter comments from Disqus and the like
 
-A few resources to get you started if this is your first Flutter project:
+  - ### Version 0.4:
+    Adds Manga Tracking services
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+  - ### Version 0.5:
+    Download Manga locally and view them offline
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  - ### Version 0.6:
+    Can create Cubari.moe links to read manga on other devices
