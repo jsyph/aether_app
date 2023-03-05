@@ -29,7 +29,7 @@ class LocalMangaDatabase {
 
     for (final key in allKeys) {
       // parse key into class
-      final parsedKey = _MangaDatabaseItemKey.parse(key);
+      final parsedKey = MangaDatabaseItemKey.parse(key);
 
       if (parsedKey.id == id) {
         final associatedMangaDatabaseItem = await _lazyDatabase!.get(key);
@@ -51,17 +51,14 @@ class LocalMangaDatabase {
     String url,
     String coverImageUrl,
   ) async {
-    _logger.d(titles);
     // Check if manga already in database
     for (final title in titles) {
-      _logger.d(title);
       final possibleMangaEntry = await exactTitleSearch(title);
 
-      _logger.i('addManga: possibleMangaEntry=$possibleMangaEntry');
       // if a possible manga entry is found, then add to it and save
       if (possibleMangaEntry != null) {
         // old manga entry key
-        final oldMangaEntryKey = _MangaDatabaseItemKey(
+        final oldMangaEntryKey = MangaDatabaseItemKey(
           possibleMangaEntry.id,
           possibleMangaEntry.allTitles,
         ).toString();
@@ -83,14 +80,14 @@ class LocalMangaDatabase {
         );
 
         // create new record, with new key
-        final newEntryKey = _MangaDatabaseItemKey(
+        final newEntryKey = MangaDatabaseItemKey(
           possibleMangaEntry.id,
           possibleMangaEntry.allTitles,
         ).toString();
 
-        await _lazyDatabase!.put(newEntryKey, possibleMangaEntry);
+        _logger.i('Updated Manga Entry: $possibleMangaEntry');
 
-        _logger.d('$possibleMangaEntry');
+        await _lazyDatabase!.put(newEntryKey, possibleMangaEntry);
 
         return possibleMangaEntry;
       }
@@ -111,13 +108,11 @@ class LocalMangaDatabase {
 
     // Put data at key
     final entryKey =
-        _MangaDatabaseItemKey(newMangaDatabaseItem.id, titles).toString();
+        MangaDatabaseItemKey(newMangaDatabaseItem.id, titles).toString();
     await _lazyDatabase!.put(
       entryKey,
       newMangaDatabaseItem,
     );
-
-    _logger.d('${await _lazyDatabase!.get(entryKey)}');
 
     return newMangaDatabaseItem;
   }
@@ -126,18 +121,13 @@ class LocalMangaDatabase {
   Future<MangaDatabaseItem?> exactTitleSearch(String title) async {
     // all keys in database
     final allKeys = _lazyDatabase!.keys;
-    _logger.d(allKeys);
 
     for (final key in allKeys) {
       // parse key into class
-      final parsedKey = _MangaDatabaseItemKey.parse(key);
+      final parsedKey = MangaDatabaseItemKey.parse(key);
       // if title is in the parsed keys titles, then return the the value from database
-      _logger.d(
-        'parsedKey.titles.contains(title)=${parsedKey.titles.contains(title)}',
-      );
+
       if (parsedKey.titles.contains(title)) {
-        _logger
-            .d('Does the key, $key, exist? ${_lazyDatabase!.containsKey(key)}');
         final associatedMangaDatabaseItem = await _lazyDatabase!.get(key);
         return associatedMangaDatabaseItem!;
       }
@@ -155,7 +145,7 @@ class LocalMangaDatabase {
 
     for (final key in allKeys) {
       // parse key into class
-      final parsedKey = _MangaDatabaseItemKey.parse(key);
+      final parsedKey = MangaDatabaseItemKey.parse(key);
 
       // add all titles one by one into woozy for the current parsed key
       for (int k = 0; k < parsedKey.titles.length; k++) {
@@ -184,7 +174,20 @@ class LocalMangaDatabase {
     return searchResults;
   }
 
-  // Future<MangaDatabaseItem> getById(String id) {}
+  Future<MangaDatabaseItem> getById(String id) async{
+    // all keys in database
+    final allKeys = _lazyDatabase!.keys;
+
+    for (final key in allKeys) {
+      final parsedKey = MangaDatabaseItemKey.parse(key);
+      if (parsedKey.id == id) {
+        final associatedMangaDatabaseItem = await _lazyDatabase!.get(key);
+        return associatedMangaDatabaseItem!;
+      }
+    }
+
+    throw MangaDatabaseError('$id is not found');
+  }
 }
 
 /// How a manga database item key looks:
@@ -193,15 +196,15 @@ class LocalMangaDatabase {
 ///
 /// `+----------------------------------+` `+-------------------------------------------------+`
 ///
-///                   id ⬆                                      titles ⬆
-class _MangaDatabaseItemKey {
-  _MangaDatabaseItemKey(this.id, this.titles);
+///                 ⬆ id ⬆                                    ⬆ titles ⬆
+class MangaDatabaseItemKey {
+  MangaDatabaseItemKey(this.id, this.titles);
 
-  factory _MangaDatabaseItemKey.parse(String rawString) {
+  factory MangaDatabaseItemKey.parse(String rawString) {
     final splitRawString = rawString.split('|');
     final id = splitRawString.first;
     final titles = splitRawString.last.split('_');
-    return _MangaDatabaseItemKey(id, titles);
+    return MangaDatabaseItemKey(id, titles);
   }
 
   final String id;

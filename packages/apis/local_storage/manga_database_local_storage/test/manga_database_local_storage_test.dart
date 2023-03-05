@@ -31,8 +31,7 @@ void main() async {
             'https://www.asurascans.com/manga/1672760368-solo-leveling/',
             'https://www.asurascans.com/wp-content/uploads/2021/03/soloLevelingCover02.png',
           );
-          AppLogger().i('-------------------------------');
-
+          
           final secondDatabaseItem = await mangaDb.addManga(
             'Flame Scans',
             ['Solo Leveling', 'Na Honjaman Lebel-eob', 'Only I Level Up'],
@@ -47,8 +46,13 @@ void main() async {
             'https://flamescans.org/series/1678014121-solo-leveling/',
             'https://flamescans.org/wp-content/uploads/2021/01/image.png',
           );
+
+          // Check if both items have same id
+          expect(firstDatabaseItem.id, equals(secondDatabaseItem.id));
         },
       );
+
+
     },
   );
 
