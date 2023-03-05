@@ -22,8 +22,8 @@ void registerHiveAdapters() {
     MangaDatabaseItemRatingAdapter(),
   );
 
-  Hive.registerAdapter<MangaDatabaseItemTitles>(
-    MangaDatabaseItemTitlesAdapter(),
+  Hive.registerAdapter<MangaDatabaseItemTitle>(
+    MangaDatabaseItemTitleAdapter(),
   );
 
   Hive.registerAdapter<MangaDatabaseItemUri>(

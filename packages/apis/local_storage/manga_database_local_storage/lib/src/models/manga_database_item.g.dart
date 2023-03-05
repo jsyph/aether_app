@@ -21,7 +21,7 @@ class MangaDatabaseItemAdapter extends TypeAdapter<MangaDatabaseItem> {
       coverImages: (fields[0] as List).cast<MangaDatabaseItemCoverImage>(),
       descriptions: (fields[1] as List).cast<MangaDatabaseItemDescription>(),
       genres: (fields[2] as List).cast<MangaDatabaseItemGenres>(),
-      titles: (fields[5] as List).cast<MangaDatabaseItemTitles>(),
+      titles: (fields[5] as List).cast<MangaDatabaseItemTitle>(),
       uris: (fields[6] as List).cast<MangaDatabaseItemUri>(),
       rating: (fields[4] as List).cast<MangaDatabaseItemRating>(),
     );

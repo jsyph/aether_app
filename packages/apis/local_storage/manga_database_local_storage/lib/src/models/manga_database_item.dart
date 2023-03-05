@@ -48,7 +48,7 @@ class MangaDatabaseItem extends HiveObject {
 
   @HiveField(5)
   // There should be no duplicates
-  List<MangaDatabaseItemTitles> titles;
+  List<MangaDatabaseItemTitle> titles;
 
   @HiveField(6)
   List<MangaDatabaseItemUri> uris;
@@ -62,8 +62,8 @@ class MangaDatabaseItem extends HiveObject {
   /// get al list containing all titles without source name
   List<String> get allTitles {
     List<String> results = [];
-    for (int i = 0; i < titles.length; i++) {
-      results.addAll(titles[i].titles);
+    for (final title in titles) {
+      results.add(title.title);
     }
 
     return results;
@@ -95,22 +95,18 @@ class MangaDatabaseItem extends HiveObject {
       MangaDatabaseItemRating(mangaRating, mangaSourceName),
     );
 
-    List<String> titlesToBeAdded = [];
     // avoid duplicate titles
     for (int i = 0; i < mangaTitles.length; i++) {
       // if titles doesn't contain a mangaTitle, then add it
       if (!allTitles.contains(mangaTitles[i])) {
-        titlesToBeAdded.add(mangaTitles[i]);
+        titles.add(
+          MangaDatabaseItemTitle(mangaTitles[i], mangaSourceName),
+        );
       }
     }
-
-    titles.add(
-      MangaDatabaseItemTitles(titlesToBeAdded, mangaSourceName),
-    );
 
     uris.add(
       MangaDatabaseItemUri(mangaUri, mangaSourceName),
     );
-    
   }
 }
