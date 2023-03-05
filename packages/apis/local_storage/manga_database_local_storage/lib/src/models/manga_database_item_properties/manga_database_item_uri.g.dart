@@ -17,7 +17,7 @@ class MangaDatabaseItemUriAdapter extends TypeAdapter<MangaDatabaseItemUri> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MangaDatabaseItemUri(
-      fields[1] as Uri,
+      fields[1] as String,
       fields[0] as String,
     );
   }
@@ -29,7 +29,7 @@ class MangaDatabaseItemUriAdapter extends TypeAdapter<MangaDatabaseItemUri> {
       ..writeByte(0)
       ..write(obj.sourceName)
       ..writeByte(1)
-      ..write(obj.uri);
+      ..write(obj.url);
   }
 
   @override

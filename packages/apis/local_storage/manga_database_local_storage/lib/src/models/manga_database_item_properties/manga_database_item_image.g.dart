@@ -18,7 +18,7 @@ class MangaDatabaseItemCoverImageAdapter
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MangaDatabaseItemCoverImage(
-      fields[1] as Uri,
+      fields[1] as String,
       fields[0] as String,
     );
   }
@@ -30,7 +30,7 @@ class MangaDatabaseItemCoverImageAdapter
       ..writeByte(0)
       ..write(obj.sourceName)
       ..writeByte(1)
-      ..write(obj.uri);
+      ..write(obj.url);
   }
 
   @override

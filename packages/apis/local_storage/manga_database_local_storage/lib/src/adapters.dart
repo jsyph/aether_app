@@ -1,20 +1,36 @@
 import 'package:hive/hive.dart';
-import 'package:manga_database_local_storage/src/models/models.dart';
-
-final List<TypeAdapter<MangaDatabaseItemProperty>> _hiveAdapters = [
-  MangaDatabaseItemPropertyAdapter(),
-  MangaDatabaseItemDescriptionAdapter(),
-  MangaDatabaseItemGenresAdapter(),
-  MangaDatabaseItemCoverImageAdapter(),
-  MangaDatabaseItemRatingAdapter(),
-  MangaDatabaseItemTitlesAdapter(),
-  MangaDatabaseItemUriAdapter(),
-];
+import 'models/models.dart';
 
 void registerHiveAdapters() {
-  for (int i = 0; i < _hiveAdapters.length; i++) {
-    Hive.registerAdapter<MangaDatabaseItemProperty>(_hiveAdapters[i]);
-  }
+  Hive.registerAdapter<MangaDatabaseItemProperty>(
+    MangaDatabaseItemPropertyAdapter(),
+  );
 
-  Hive.registerAdapter<MangaDatabaseItem>(MangaDatabaseItemAdapter());
+  Hive.registerAdapter<MangaDatabaseItemCoverImage>(
+    MangaDatabaseItemCoverImageAdapter(),
+  );
+
+  Hive.registerAdapter<MangaDatabaseItemDescription>(
+    MangaDatabaseItemDescriptionAdapter(),
+  );
+
+  Hive.registerAdapter<MangaDatabaseItemGenres>(
+    MangaDatabaseItemGenresAdapter(),
+  );
+
+  Hive.registerAdapter<MangaDatabaseItemRating>(
+    MangaDatabaseItemRatingAdapter(),
+  );
+
+  Hive.registerAdapter<MangaDatabaseItemTitles>(
+    MangaDatabaseItemTitlesAdapter(),
+  );
+
+  Hive.registerAdapter<MangaDatabaseItemUri>(
+    MangaDatabaseItemUriAdapter(),
+  );
+
+  Hive.registerAdapter<MangaDatabaseItem>(
+    MangaDatabaseItemAdapter(),
+  );
 }

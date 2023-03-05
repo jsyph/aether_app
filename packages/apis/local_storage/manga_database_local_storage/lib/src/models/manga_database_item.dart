@@ -13,7 +13,7 @@ class MangaDatabaseItem extends HiveObject {
     required this.descriptions,
     required this.genres,
     required this.titles,
-    required this.uri,
+    required this.uris,
     required this.rating,
   });
 
@@ -26,7 +26,7 @@ class MangaDatabaseItem extends HiveObject {
       id: Uuid().v4(),
       rating: [],
       titles: [],
-      uri: [],
+      uris: [],
     );
   }
 
@@ -39,8 +39,8 @@ class MangaDatabaseItem extends HiveObject {
   @HiveField(2)
   List<MangaDatabaseItemGenres> genres;
 
-  @HiveField(3)
   // id should never change
+  @HiveField(3)
   final String id;
 
   @HiveField(4)
@@ -51,33 +51,33 @@ class MangaDatabaseItem extends HiveObject {
   List<MangaDatabaseItemTitles> titles;
 
   @HiveField(6)
-  List<MangaDatabaseItemUri> uri;
+  List<MangaDatabaseItemUri> uris;
 
   @override
   String toString() {
     // converts class to string interpretation
-    return 'MangaDatabaseItem(\nid: $id,\ncoverImages: $coverImages,\ndescriptions: $descriptions,\ngenres: $genres,\nrating: $rating,\ntitles; $titles,\nuri: $uri,\n),\n';
+    return 'MangaDatabaseItem(\nid: $id,\ncoverImages: $coverImages,\ndescriptions: $descriptions,\ngenres: $genres,\nrating: $rating,\ntitles; $titles,\nuri: $uris,\n),\n';
   }
 
   /// get al list containing all titles without source name
   List<String> get allTitles {
-    List<String> result = [];
+    List<String> results = [];
     for (int i = 0; i < titles.length; i++) {
-      result.addAll(titles[i].titles);
+      results.addAll(titles[i].titles);
     }
 
-    return result;
+    return results;
   }
 
   /// adds data to current database item and returns it
   void addData(
     String mangaSourceName,
-    Uri mangaCoverImage,
+    String mangaCoverImage,
     String mangaDescription,
     List<String> mangaGenres,
     double mangaRating,
     List<String> mangaTitles,
-    Uri mangaUri,
+    String mangaUri,
   ) {
     coverImages.add(
       MangaDatabaseItemCoverImage(mangaCoverImage, mangaSourceName),
@@ -108,8 +108,9 @@ class MangaDatabaseItem extends HiveObject {
       MangaDatabaseItemTitles(titlesToBeAdded, mangaSourceName),
     );
 
-    uri.add(
+    uris.add(
       MangaDatabaseItemUri(mangaUri, mangaSourceName),
     );
+    
   }
 }

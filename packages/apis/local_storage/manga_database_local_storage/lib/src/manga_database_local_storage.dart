@@ -48,8 +48,8 @@ class LocalMangaDatabase {
     String description,
     List<String> genres,
     double rating,
-    Uri uri,
-    Uri coverImageUri,
+    String url,
+    String coverImageUrl,
   ) async {
     _logger.d(titles);
     // Check if manga already in database
@@ -60,51 +60,64 @@ class LocalMangaDatabase {
       _logger.i('addManga: possibleMangaEntry=$possibleMangaEntry');
       // if a possible manga entry is found, then add to it and save
       if (possibleMangaEntry != null) {
-        // delete old record
-        _logger.i('Deleting old record');
-        await _lazyDatabase!.delete(
-          _MangaDatabaseItemKey(
-              possibleMangaEntry.id, possibleMangaEntry.allTitles),
-        );
+        // old manga entry key
+        final oldMangaEntryKey = _MangaDatabaseItemKey(
+          possibleMangaEntry.id,
+          possibleMangaEntry.allTitles,
+        ).toString();
 
         possibleMangaEntry.addData(
           sourceName,
-          coverImageUri,
+          coverImageUrl,
           description,
           genres,
           rating,
           titles,
-          uri,
+          url,
+        );
+
+        // delete old record
+        _logger.i('Deleting old record');
+        await _lazyDatabase!.delete(
+          oldMangaEntryKey,
         );
 
         // create new record, with new key
-        await _lazyDatabase!.put(
-            _MangaDatabaseItemKey(
-                possibleMangaEntry.id, possibleMangaEntry.allTitles),
-            possibleMangaEntry);
+        final newEntryKey = _MangaDatabaseItemKey(
+          possibleMangaEntry.id,
+          possibleMangaEntry.allTitles,
+        ).toString();
+
+        await _lazyDatabase!.put(newEntryKey, possibleMangaEntry);
+
+        _logger.d('$possibleMangaEntry');
 
         return possibleMangaEntry;
       }
     }
 
-    final newMangaDatabaseItem = MangaDatabaseItem.empty();
-    newMangaDatabaseItem.addData(
-      sourceName,
-      coverImageUri,
-      description,
-      genres,
-      rating,
-      titles,
-      uri,
-    );
+    final newMangaDatabaseItem = MangaDatabaseItem.empty()
+      ..addData(
+        sourceName,
+        coverImageUrl,
+        description,
+        genres,
+        rating,
+        titles,
+        url,
+      );
 
     _logger.i('Created new manga entry: $newMangaDatabaseItem');
 
     // Put data at key
+    final entryKey =
+        _MangaDatabaseItemKey(newMangaDatabaseItem.id, titles).toString();
     await _lazyDatabase!.put(
-      _MangaDatabaseItemKey(newMangaDatabaseItem.id, titles).toString(),
+      entryKey,
       newMangaDatabaseItem,
     );
+
+    _logger.d('${await _lazyDatabase!.get(entryKey)}');
 
     return newMangaDatabaseItem;
   }
@@ -115,7 +128,7 @@ class LocalMangaDatabase {
     final allKeys = _lazyDatabase!.keys;
     _logger.d(allKeys);
 
-    for (final String key in allKeys) {
+    for (final key in allKeys) {
       // parse key into class
       final parsedKey = _MangaDatabaseItemKey.parse(key);
       // if title is in the parsed keys titles, then return the the value from database
@@ -123,7 +136,10 @@ class LocalMangaDatabase {
         'parsedKey.titles.contains(title)=${parsedKey.titles.contains(title)}',
       );
       if (parsedKey.titles.contains(title)) {
-        return await _lazyDatabase!.get(key);
+        _logger
+            .d('Does the key, $key, exist? ${_lazyDatabase!.containsKey(key)}');
+        final associatedMangaDatabaseItem = await _lazyDatabase!.get(key);
+        return associatedMangaDatabaseItem!;
       }
     }
 
@@ -171,6 +187,13 @@ class LocalMangaDatabase {
   // Future<MangaDatabaseItem> getById(String id) {}
 }
 
+/// How a manga database item key looks:
+///
+/// `4a67344c-3264-4fa1-a5a6-a673793536bd|Solo Leveling_Na Honjaman Lebel-eob_Only I Level Up`
+///
+/// `+----------------------------------+` `+-------------------------------------------------+`
+///
+///                   id ⬆                                      titles ⬆
 class _MangaDatabaseItemKey {
   _MangaDatabaseItemKey(this.id, this.titles);
 

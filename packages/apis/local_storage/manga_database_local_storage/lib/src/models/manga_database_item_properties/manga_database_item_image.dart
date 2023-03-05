@@ -6,16 +6,16 @@ part 'manga_database_item_image.g.dart';
 
 @HiveType(typeId: 3)
 class MangaDatabaseItemCoverImage extends MangaDatabaseItemProperty {
-  MangaDatabaseItemCoverImage(this.uri, this.sourceName);
+  MangaDatabaseItemCoverImage(this.url, this.sourceName);
 
   @HiveField(0)
   final String sourceName;
 
   @HiveField(1)
-  final Uri uri;
+  final String url;
 
   @override
   String toString() {
-    return uri.toString();
+    return url.toString();
   }
 }
