@@ -1,0 +1,4 @@
+mixin MangaDatabase{
+  // getDatabase
+  // getRecentlyAdded
+}

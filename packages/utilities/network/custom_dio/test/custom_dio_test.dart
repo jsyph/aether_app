@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:alfred/alfred.dart';
 import 'package:custom_dio/custom_dio.dart';
 
@@ -17,9 +17,6 @@ void main() async {
 
   final simpleWebpageAddress =
       'http://localhost:${app.server!.port}/simple_website.html';
-
-  final javaScriptWebPageAddress =
-      'http://localhost:${app.server!.port}/javascript_website.html';
 
   test(
     'Test RateLimitInterceptor',

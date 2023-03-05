@@ -1,16 +1,12 @@
-name: custom_dio
+name: app_logging
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
 # repository: https://github.com/my_org/my_repo
 environment:
-  sdk: ">=2.19.2 <3.0.0"
-
-dependencies:
-  dio: ^5.0.1
-  flutter_inappwebview: ^5.7.2+3
-  logger: ^1.2.2
+  sdk: '>=2.19.2 <3.0.0'
 
 dev_dependencies:
-  alfred: ^1.0.0+1
   lints: ^2.0.0
   test: ^1.21.0
+dependencies:
+  logger: ^1.2.2

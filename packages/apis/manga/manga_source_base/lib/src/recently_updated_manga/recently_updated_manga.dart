@@ -1,0 +1,1 @@
+export 'recently_updated_manga_mixin.dart';

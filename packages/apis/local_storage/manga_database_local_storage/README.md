@@ -1,0 +1,1 @@
+Local manga database to store manga from multiple sources
