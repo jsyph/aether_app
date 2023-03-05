@@ -13,21 +13,12 @@ class MangaDatabaseItemPropertyAdapter
 
   @override
   MangaDatabaseItemProperty read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return MangaDatabaseItemProperty(
-      fields[0] as String,
-    );
+    return MangaDatabaseItemProperty();
   }
 
   @override
   void write(BinaryWriter writer, MangaDatabaseItemProperty obj) {
-    writer
-      ..writeByte(1)
-      ..writeByte(0)
-      ..write(obj.sourceName);
+    writer.writeByte(0);
   }
 
   @override

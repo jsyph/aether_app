@@ -6,7 +6,10 @@ part 'manga_database_item_title.g.dart';
 
 @HiveType(typeId: 5)
 class MangaDatabaseItemTitles extends MangaDatabaseItemProperty {
-  MangaDatabaseItemTitles(this.titles, super.sourceName);
+  MangaDatabaseItemTitles(this.titles, this.sourceName);
+
+  @HiveField(0)
+  final String sourceName;
 
   @HiveField(1)
   final List<String> titles;

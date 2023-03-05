@@ -6,10 +6,13 @@ part 'manga_database_item_genres.g.dart';
 
 @HiveType(typeId: 2)
 class MangaDatabaseItemGenres extends MangaDatabaseItemProperty {
-  MangaDatabaseItemGenres(this.genres, super.sourceName);
+  MangaDatabaseItemGenres(this.genres, this.sourceName);
 
   @HiveField(1)
   final List<String> genres;
+
+  @HiveField(0)
+  final String sourceName;
 
   @override
   String toString() {

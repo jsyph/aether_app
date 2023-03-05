@@ -54,10 +54,19 @@ class LocalMangaDatabase {
     _logger.d(titles);
     // Check if manga already in database
     for (final title in titles) {
+      _logger.d(title);
       final possibleMangaEntry = await exactTitleSearch(title);
+
       _logger.i('addManga: possibleMangaEntry=$possibleMangaEntry');
       // if a possible manga entry is found, then add to it and save
       if (possibleMangaEntry != null) {
+        // delete old record
+        _logger.i('Deleting old record');
+        await _lazyDatabase!.delete(
+          _MangaDatabaseItemKey(
+              possibleMangaEntry.id, possibleMangaEntry.allTitles),
+        );
+
         possibleMangaEntry.addData(
           sourceName,
           coverImageUri,
@@ -68,7 +77,11 @@ class LocalMangaDatabase {
           uri,
         );
 
-        possibleMangaEntry.save();
+        // create new record, with new key
+        await _lazyDatabase!.put(
+            _MangaDatabaseItemKey(
+                possibleMangaEntry.id, possibleMangaEntry.allTitles),
+            possibleMangaEntry);
 
         return possibleMangaEntry;
       }
@@ -88,7 +101,7 @@ class LocalMangaDatabase {
     _logger.i('Created new manga entry: $newMangaDatabaseItem');
 
     // Put data at key
-    _lazyDatabase!.put(
+    await _lazyDatabase!.put(
       _MangaDatabaseItemKey(newMangaDatabaseItem.id, titles).toString(),
       newMangaDatabaseItem,
     );
@@ -102,11 +115,13 @@ class LocalMangaDatabase {
     final allKeys = _lazyDatabase!.keys;
     _logger.d(allKeys);
 
-    for (final key in allKeys) {
+    for (final String key in allKeys) {
       // parse key into class
       final parsedKey = _MangaDatabaseItemKey.parse(key);
       // if title is in the parsed keys titles, then return the the value from database
-      _logger.d('parsedKey.titles.contains(title)=${parsedKey.titles.contains(title)}');
+      _logger.d(
+        'parsedKey.titles.contains(title)=${parsedKey.titles.contains(title)}',
+      );
       if (parsedKey.titles.contains(title)) {
         return await _lazyDatabase!.get(key);
       }

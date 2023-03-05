@@ -27,10 +27,10 @@ class MangaDatabaseItemTitlesAdapter
   void write(BinaryWriter writer, MangaDatabaseItemTitles obj) {
     writer
       ..writeByte(2)
-      ..writeByte(1)
-      ..write(obj.titles)
       ..writeByte(0)
-      ..write(obj.sourceName);
+      ..write(obj.sourceName)
+      ..writeByte(1)
+      ..write(obj.titles);
   }
 
   @override

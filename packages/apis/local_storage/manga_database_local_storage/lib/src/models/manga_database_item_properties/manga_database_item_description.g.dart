@@ -27,10 +27,10 @@ class MangaDatabaseItemDescriptionAdapter
   void write(BinaryWriter writer, MangaDatabaseItemDescription obj) {
     writer
       ..writeByte(2)
-      ..writeByte(1)
-      ..write(obj.text)
       ..writeByte(0)
-      ..write(obj.sourceName);
+      ..write(obj.sourceName)
+      ..writeByte(1)
+      ..write(obj.text);
   }
 
   @override

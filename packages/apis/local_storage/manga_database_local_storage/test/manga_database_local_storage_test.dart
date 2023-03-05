@@ -17,7 +17,7 @@ void main() async {
       test(
         'Test add Manga',
         () async {
-          MangaDatabaseItem databaseItem = await mangaDb.addManga(
+          final firstDatabaseItem = await mangaDb.addManga(
             'Asura Scans',
             ['Solo Leveling', 'Na Honjaman Lebel-eob', 'Only I Level Up'],
             '''10 years ago, after “the Gate” that connected the real world with the monster world opened, some of the ordinary, everyday people received the power to hunt monsters within the Gate.
@@ -33,8 +33,9 @@ void main() async {
             Uri.parse(
                 'https://www.asurascans.com/wp-content/uploads/2021/03/soloLevelingC2over02.png'),
           );
+          AppLogger().i('-------------------------------');
 
-          databaseItem = await mangaDb.addManga(
+          final secondDatabaseItem = await mangaDb.addManga(
             'Flame Scans',
             ['Solo Leveling', 'Na Honjaman Lebel-eob', 'Only I Level Up'],
             '''10 years ago, after “the Gate” that connected the real world with the monster world opened, some of the ordinary, everyday people received the power to hunt monsters within the Gate.
@@ -45,20 +46,20 @@ void main() async {
                 If I trained in accordance with my quests and hunted monsters, my level would rise. Changing from the weakest Hunter to the strongest S-rank Hunter!''',
             ['Action', 'Adventure', 'Fantasy', 'Shounen'],
             10,
-            Uri.parse('https://flamescans.org/series/1678014121-solo-leveling/'),
-            Uri.parse('https://flamescans.org/wp-content/uploads/2021/01/image.png'),
+            Uri.parse(
+                'https://flamescans.org/series/1678014121-solo-leveling/'),
+            Uri.parse(
+                'https://flamescans.org/wp-content/uploads/2021/01/image.png'),
           );
-
-
         },
       );
     },
   );
 
-  
+  // tearDownAll(() => Hive.deleteBoxFromDisk('manga_database'));
 }
 
 void initHive() {
   var path = Directory.current.path;
-  Hive.init('$path/hive_test');
+  Hive.init('$path/test/hive_test');
 }

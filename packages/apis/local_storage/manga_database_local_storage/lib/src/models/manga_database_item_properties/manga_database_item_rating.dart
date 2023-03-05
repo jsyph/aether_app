@@ -6,7 +6,10 @@ part 'manga_database_item_rating.g.dart';
 
 @HiveType(typeId: 4)
 class MangaDatabaseItemRating extends MangaDatabaseItemProperty {
-  MangaDatabaseItemRating(this.rating, super.sourceName);
+  MangaDatabaseItemRating(this.rating, this.sourceName);
+
+  @HiveField(0)
+  final String sourceName;
 
   @HiveField(1)
   final double rating;

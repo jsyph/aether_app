@@ -27,10 +27,10 @@ class MangaDatabaseItemCoverImageAdapter
   void write(BinaryWriter writer, MangaDatabaseItemCoverImage obj) {
     writer
       ..writeByte(2)
-      ..writeByte(1)
-      ..write(obj.uri)
       ..writeByte(0)
-      ..write(obj.sourceName);
+      ..write(obj.sourceName)
+      ..writeByte(1)
+      ..write(obj.uri);
   }
 
   @override

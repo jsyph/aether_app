@@ -17,13 +17,13 @@ class MangaDatabaseItemAdapter extends TypeAdapter<MangaDatabaseItem> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MangaDatabaseItem(
-      id: fields[4] as String,
-      coverImages: (fields[1] as List).cast<MangaDatabaseItemCoverImage>(),
-      descriptions: (fields[2] as List).cast<MangaDatabaseItemDescription>(),
-      genres: (fields[3] as List).cast<MangaDatabaseItemGenres>(),
-      titles: (fields[6] as List).cast<MangaDatabaseItemTitles>(),
-      uri: (fields[7] as List).cast<MangaDatabaseItemUri>(),
-      rating: (fields[5] as List).cast<MangaDatabaseItemRating>(),
+      id: fields[3] as String,
+      coverImages: (fields[0] as List).cast<MangaDatabaseItemCoverImage>(),
+      descriptions: (fields[1] as List).cast<MangaDatabaseItemDescription>(),
+      genres: (fields[2] as List).cast<MangaDatabaseItemGenres>(),
+      titles: (fields[5] as List).cast<MangaDatabaseItemTitles>(),
+      uri: (fields[6] as List).cast<MangaDatabaseItemUri>(),
+      rating: (fields[4] as List).cast<MangaDatabaseItemRating>(),
     );
   }
 
@@ -31,19 +31,19 @@ class MangaDatabaseItemAdapter extends TypeAdapter<MangaDatabaseItem> {
   void write(BinaryWriter writer, MangaDatabaseItem obj) {
     writer
       ..writeByte(7)
-      ..writeByte(1)
+      ..writeByte(0)
       ..write(obj.coverImages)
-      ..writeByte(2)
+      ..writeByte(1)
       ..write(obj.descriptions)
-      ..writeByte(3)
+      ..writeByte(2)
       ..write(obj.genres)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.id)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.rating)
-      ..writeByte(6)
+      ..writeByte(5)
       ..write(obj.titles)
-      ..writeByte(7)
+      ..writeByte(6)
       ..write(obj.uri);
   }
 

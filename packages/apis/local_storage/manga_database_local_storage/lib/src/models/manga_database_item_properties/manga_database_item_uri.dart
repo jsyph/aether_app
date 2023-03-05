@@ -6,7 +6,10 @@ part 'manga_database_item_uri.g.dart';
 
 @HiveType(typeId: 6)
 class MangaDatabaseItemUri extends MangaDatabaseItemProperty {
-  MangaDatabaseItemUri(this.uri, super.sourceName);
+  MangaDatabaseItemUri(this.uri, this.sourceName);
+
+  @HiveField(0)
+  final String sourceName;
 
   @HiveField(1)
   final Uri uri;

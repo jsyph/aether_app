@@ -30,31 +30,32 @@ class MangaDatabaseItem extends HiveObject {
     );
   }
 
-  @HiveField(1)
+  @HiveField(0)
   List<MangaDatabaseItemCoverImage> coverImages;
 
-  @HiveField(2)
+  @HiveField(1)
   List<MangaDatabaseItemDescription> descriptions;
 
-  @HiveField(3)
+  @HiveField(2)
   List<MangaDatabaseItemGenres> genres;
 
-  @HiveField(4)
+  @HiveField(3)
   // id should never change
   final String id;
 
-  @HiveField(5)
+  @HiveField(4)
   List<MangaDatabaseItemRating> rating;
 
-  @HiveField(6)
+  @HiveField(5)
+  // There should be no duplicates
   List<MangaDatabaseItemTitles> titles;
 
-  @HiveField(7)
+  @HiveField(6)
   List<MangaDatabaseItemUri> uri;
 
   @override
   String toString() {
-    // converts class to string interpretation 
+    // converts class to string interpretation
     return 'MangaDatabaseItem(\nid: $id,\ncoverImages: $coverImages,\ndescriptions: $descriptions,\ngenres: $genres,\nrating: $rating,\ntitles; $titles,\nuri: $uri,\n),\n';
   }
 
@@ -94,8 +95,17 @@ class MangaDatabaseItem extends HiveObject {
       MangaDatabaseItemRating(mangaRating, mangaSourceName),
     );
 
+    List<String> titlesToBeAdded = [];
+    // avoid duplicate titles
+    for (int i = 0; i < mangaTitles.length; i++) {
+      // if titles doesn't contain a mangaTitle, then add it
+      if (!allTitles.contains(mangaTitles[i])) {
+        titlesToBeAdded.add(mangaTitles[i]);
+      }
+    }
+
     titles.add(
-      MangaDatabaseItemTitles(mangaTitles, mangaSourceName),
+      MangaDatabaseItemTitles(titlesToBeAdded, mangaSourceName),
     );
 
     uri.add(

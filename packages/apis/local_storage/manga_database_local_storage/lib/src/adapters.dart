@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:hive/hive.dart';
 import 'package:manga_database_local_storage/src/models/models.dart';
 

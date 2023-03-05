@@ -27,10 +27,10 @@ class MangaDatabaseItemRatingAdapter
   void write(BinaryWriter writer, MangaDatabaseItemRating obj) {
     writer
       ..writeByte(2)
-      ..writeByte(1)
-      ..write(obj.rating)
       ..writeByte(0)
-      ..write(obj.sourceName);
+      ..write(obj.sourceName)
+      ..writeByte(1)
+      ..write(obj.rating);
   }
 
   @override
