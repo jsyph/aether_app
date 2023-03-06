@@ -19,14 +19,20 @@ await mangaDb.deleteManga('4a67344c-3264-4fa1-a5a6-a673793536bd');
 ```dart
 // Add Manga
 await mangaDb.addManga(
-    'Asura Scans',
-    ['Solo Leveling', 'Na Honjaman Lebel-eob', 'Only I Level Up'],
-    '''...''',
-    ['Action', 'Adventure', 'Fantasy', 'Shounen'],
-    10,
-    'https://www.asurascans.com/manga/1672760368-solo-leveling/',
-    'https://www.asurascans.com.../soloLevelingCover02.png',
-    );
+            sourceName: 'Asura Scans',
+            titles: [
+              'Solo Leveling',
+              'Na Honjaman Lebel-eob',
+              'Only I Level Up'
+            ],
+            description:
+                '''...''',
+            genres: ['Action', 'Adventure', 'Fantasy', 'Shounen'],
+            rating: 10,
+            url: 'https://www.asurascans.com/manga/1672760368-solo-leveling/',
+            coverImageUrl:
+                'https://www.asurascans.com/.../soloLevelingCover02.png',
+          );
 ```
 
 ```dart
@@ -37,4 +43,9 @@ await mangaDb.exactTitleSearch('Solo Leveling');
 ```dart
 // Fuzzy Search for titles
 await mangaDb.fuzzyTitleSearch('Solo');
+```
+
+```dart
+// Returns a manga dump of all manga in database
+await mangaDb.allManga();
 ```

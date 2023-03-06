@@ -5,8 +5,8 @@ import 'manga_database_item_properties.dart';
 part 'manga_database_item_uri.g.dart';
 
 @HiveType(typeId: 6)
-class MangaDatabaseItemUri extends MangaDatabaseItemProperty {
-  MangaDatabaseItemUri(this.url, this.sourceName);
+class MangaDatabaseItemUrl extends MangaDatabaseItemProperty {
+  MangaDatabaseItemUrl(this.url, this.sourceName);
 
   @HiveField(0)
   final String sourceName;

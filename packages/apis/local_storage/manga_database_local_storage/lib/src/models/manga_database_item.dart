@@ -13,7 +13,7 @@ class MangaDatabaseItem extends HiveObject {
     required this.descriptions,
     required this.genres,
     required this.titles,
-    required this.uris,
+    required this.urls,
     required this.rating,
   });
 
@@ -26,7 +26,7 @@ class MangaDatabaseItem extends HiveObject {
       id: Uuid().v4(),
       rating: [],
       titles: [],
-      uris: [],
+      urls: [],
     );
   }
 
@@ -51,12 +51,12 @@ class MangaDatabaseItem extends HiveObject {
   List<MangaDatabaseItemTitle> titles;
 
   @HiveField(6)
-  List<MangaDatabaseItemUri> uris;
+  List<MangaDatabaseItemUrl> urls;
 
   @override
   String toString() {
     // converts class to string interpretation
-    return 'MangaDatabaseItem(\nid: $id,\ncoverImages: $coverImages,\ndescriptions: $descriptions,\ngenres: $genres,\nrating: $rating,\ntitles; $titles,\nuri: $uris,\n),\n';
+    return 'MangaDatabaseItem(\nid: $id,\ncoverImages: $coverImages,\ndescriptions: $descriptions,\ngenres: $genres,\nrating: $rating,\ntitles; $titles,\nuri: $urls,\n),\n';
   }
 
   /// get al list containing all titles without source name
@@ -105,8 +105,8 @@ class MangaDatabaseItem extends HiveObject {
       }
     }
 
-    uris.add(
-      MangaDatabaseItemUri(mangaUri, mangaSourceName),
+    urls.add(
+      MangaDatabaseItemUrl(mangaUri, mangaSourceName),
     );
   }
 }

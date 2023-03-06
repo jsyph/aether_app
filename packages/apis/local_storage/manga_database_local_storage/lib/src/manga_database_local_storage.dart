@@ -58,15 +58,15 @@ class LocalMangaDatabase {
   }
 
   /// Add manga to database, if it exists then append to it, else creates a new entry
-  Future<MangaDatabaseItem> addManga(
-    String sourceName,
-    List<String> titles,
-    String description,
-    List<String> genres,
-    double rating,
-    String url,
-    String coverImageUrl,
-  ) async {
+  Future<MangaDatabaseItem> addManga({
+    required String sourceName,
+    required List<String> titles,
+    required String description,
+    required List<String> genres,
+    required double rating,
+    required String url,
+    required String coverImageUrl,
+  }) async {
     // Check if manga already in database
     for (final title in titles) {
       final possibleMangaEntry = await exactTitleSearch(title);
@@ -108,6 +108,8 @@ class LocalMangaDatabase {
         return possibleMangaEntry;
       }
     }
+
+    // if manga is not found, then create a new record
 
     final newMangaDatabaseItem = MangaDatabaseItem.empty()
       ..addData(
@@ -159,15 +161,15 @@ class LocalMangaDatabase {
 
     final woozy = Woozy<String>();
 
+    // add all keys into woozy entries
     for (final key in allKeys) {
       // parse key into class
       final parsedKey = MangaDatabaseItemKey.parse(key);
 
       // add all titles one by one into woozy for the current parsed key
-      for (int k = 0; k < parsedKey.titles.length; k++) {
-        final currentTitle = parsedKey.titles[k];
+      for (final title in parsedKey.titles) {
         // add title with the current key as their value
-        woozy.addEntry(currentTitle, value: key);
+        woozy.addEntry(title, value: key);
       }
     }
 
@@ -184,10 +186,31 @@ class LocalMangaDatabase {
     }
 
     // remove duplicates search results
-    // https://stackoverflow.com/a/51446910/14928208
-    searchResults = searchResults.toSet().toList();
+    // inspired by https://stackoverflow.com/a/58167140/14928208
+    final ids = <dynamic>{};
+    final uniqueSearchResults = searchResults
+        .where(
+          (element) => ids.add(element.id),
+        )
+        .toList();
 
-    return searchResults;
+    _logger.d(uniqueSearchResults);
+
+    return uniqueSearchResults;
+  }
+
+  /// Returns all manga in database
+  Future<List<MangaDatabaseItem>> allManga() async {
+    final allKeys = _database.keys;
+
+    List<MangaDatabaseItem> allManga = [];
+
+    for (final key in allKeys) {
+      final associatedMangaDatabaseItem = await _database.get(key);
+      allManga.add(associatedMangaDatabaseItem!);
+    }
+
+    return allManga;
   }
 
   LazyBox<MangaDatabaseItem> get _database => _nullableLazyDatabase!;

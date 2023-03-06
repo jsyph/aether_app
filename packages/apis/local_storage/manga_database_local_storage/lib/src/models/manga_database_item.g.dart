@@ -22,7 +22,7 @@ class MangaDatabaseItemAdapter extends TypeAdapter<MangaDatabaseItem> {
       descriptions: (fields[1] as List).cast<MangaDatabaseItemDescription>(),
       genres: (fields[2] as List).cast<MangaDatabaseItemGenres>(),
       titles: (fields[5] as List).cast<MangaDatabaseItemTitle>(),
-      uris: (fields[6] as List).cast<MangaDatabaseItemUri>(),
+      urls: (fields[6] as List).cast<MangaDatabaseItemUrl>(),
       rating: (fields[4] as List).cast<MangaDatabaseItemRating>(),
     );
   }
@@ -44,7 +44,7 @@ class MangaDatabaseItemAdapter extends TypeAdapter<MangaDatabaseItem> {
       ..writeByte(5)
       ..write(obj.titles)
       ..writeByte(6)
-      ..write(obj.uris);
+      ..write(obj.urls);
   }
 
   @override

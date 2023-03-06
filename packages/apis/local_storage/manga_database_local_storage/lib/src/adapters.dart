@@ -26,7 +26,7 @@ void registerHiveAdapters() {
     MangaDatabaseItemTitleAdapter(),
   );
 
-  Hive.registerAdapter<MangaDatabaseItemUri>(
+  Hive.registerAdapter<MangaDatabaseItemUrl>(
     MangaDatabaseItemUriAdapter(),
   );
 
