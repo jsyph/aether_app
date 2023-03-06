@@ -1,11 +1,9 @@
 import 'package:hive/hive.dart';
 
-import 'manga_database_item_properties.dart';
-
 part 'manga_database_item_image.g.dart';
 
 @HiveType(typeId: 3)
-class MangaDatabaseItemCoverImage extends MangaDatabaseItemProperty {
+class MangaDatabaseItemCoverImage {
   MangaDatabaseItemCoverImage(this.url, this.sourceName);
 
   @HiveField(0)

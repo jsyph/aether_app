@@ -66,6 +66,7 @@ class LocalMangaDatabase {
     required double rating,
     required String url,
     required String coverImageUrl,
+    MangaDatabaseItemMangaType? contentType,
   }) async {
     // Check if manga already in database
     for (final title in titles) {
@@ -80,14 +81,14 @@ class LocalMangaDatabase {
         ).toString();
 
         possibleMangaEntry.addData(
-          sourceName,
-          coverImageUrl,
-          description,
-          genres,
-          rating,
-          titles,
-          url,
-        );
+            mangaSourceName: sourceName,
+            mangaCoverImage: coverImageUrl,
+            mangaDescription: description,
+            mangaGenres: genres,
+            mangaRating: rating,
+            mangaTitles: titles,
+            mangaUrl: url,
+            mangaContentType: contentType);
 
         // delete old record
         _logger.i('Deleting old record');
@@ -113,13 +114,14 @@ class LocalMangaDatabase {
 
     final newMangaDatabaseItem = MangaDatabaseItem.empty()
       ..addData(
-        sourceName,
-        coverImageUrl,
-        description,
-        genres,
-        rating,
-        titles,
-        url,
+        mangaSourceName: sourceName,
+        mangaCoverImage: coverImageUrl,
+        mangaDescription: description,
+        mangaGenres: genres,
+        mangaRating: rating,
+        mangaTitles: titles,
+        mangaUrl: url,
+        mangaContentType: contentType,
       );
 
     _logger.i('Created new manga entry: $newMangaDatabaseItem');
@@ -193,8 +195,6 @@ class LocalMangaDatabase {
           (element) => ids.add(element.id),
         )
         .toList();
-
-    _logger.d(uniqueSearchResults);
 
     return uniqueSearchResults;
   }

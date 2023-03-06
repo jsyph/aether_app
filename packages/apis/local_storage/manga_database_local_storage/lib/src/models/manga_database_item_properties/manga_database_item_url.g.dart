@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'manga_database_item_uri.dart';
+part of 'manga_database_item_url.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MangaDatabaseItemUriAdapter extends TypeAdapter<MangaDatabaseItemUrl> {
+class MangaDatabaseItemUrlAdapter extends TypeAdapter<MangaDatabaseItemUrl> {
   @override
   final int typeId = 6;
 
@@ -38,7 +38,7 @@ class MangaDatabaseItemUriAdapter extends TypeAdapter<MangaDatabaseItemUrl> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MangaDatabaseItemUriAdapter &&
+      other is MangaDatabaseItemUrlAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

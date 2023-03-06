@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:hive/hive.dart';
 import 'package:manga_database_local_storage/manga_database_local_storage.dart';
+import 'package:manga_database_local_storage/src/models/manga_database_item_properties/manga_database_item_manga_type.dart';
 import 'package:test/test.dart';
 
 void main() async {
@@ -23,12 +24,12 @@ void main() async {
     url: 'https://www.asurascans.com/manga/1672760368-solo-leveling/',
     coverImageUrl:
         'https://www.asurascans.com/wp-content/uploads/2021/03/soloLevelingCover02.png',
+    contentType: MangaDatabaseItemMangaType.manhwa,
   );
 
   group(
     'Test local manga database',
     () {
-
       test(
         'Test fuzzyTitleSearch',
         () async {
@@ -88,6 +89,7 @@ void main() async {
             url: 'https://flamescans.org/series/1678014121-solo-leveling/',
             coverImageUrl:
                 'https://flamescans.org/wp-content/uploads/2021/01/image.png',
+            contentType: MangaDatabaseItemMangaType.manhwa,
           );
 
           // Check if both items have same id

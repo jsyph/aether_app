@@ -8,7 +8,7 @@ part of 'manga_database_item.dart';
 
 class MangaDatabaseItemAdapter extends TypeAdapter<MangaDatabaseItem> {
   @override
-  final int typeId = 7;
+  final int typeId = 8;
 
   @override
   MangaDatabaseItem read(BinaryReader reader) {
@@ -24,13 +24,16 @@ class MangaDatabaseItemAdapter extends TypeAdapter<MangaDatabaseItem> {
       titles: (fields[5] as List).cast<MangaDatabaseItemTitle>(),
       urls: (fields[6] as List).cast<MangaDatabaseItemUrl>(),
       rating: (fields[4] as List).cast<MangaDatabaseItemRating>(),
+      contentType: fields[7] as MangaDatabaseItemMangaType,
     );
   }
 
   @override
   void write(BinaryWriter writer, MangaDatabaseItem obj) {
     writer
+      ..writeByte(8)
       ..writeByte(7)
+      ..write(obj.contentType)
       ..writeByte(0)
       ..write(obj.coverImages)
       ..writeByte(1)

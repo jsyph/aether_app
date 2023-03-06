@@ -2,10 +2,6 @@ import 'package:hive/hive.dart';
 import 'models/models.dart';
 
 void registerHiveAdapters() {
-  Hive.registerAdapter<MangaDatabaseItemProperty>(
-    MangaDatabaseItemPropertyAdapter(),
-  );
-
   Hive.registerAdapter<MangaDatabaseItemCoverImage>(
     MangaDatabaseItemCoverImageAdapter(),
   );
@@ -27,7 +23,11 @@ void registerHiveAdapters() {
   );
 
   Hive.registerAdapter<MangaDatabaseItemUrl>(
-    MangaDatabaseItemUriAdapter(),
+    MangaDatabaseItemUrlAdapter(),
+  );
+
+  Hive.registerAdapter(
+    MangaDatabaseItemMangaTypeAdapter(),
   );
 
   Hive.registerAdapter<MangaDatabaseItem>(

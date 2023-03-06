@@ -1,11 +1,9 @@
 import 'package:hive/hive.dart';
 
-import 'manga_database_item_properties.dart';
-
 part 'manga_database_item_genres.g.dart';
 
 @HiveType(typeId: 2)
-class MangaDatabaseItemGenres extends MangaDatabaseItemProperty {
+class MangaDatabaseItemGenres {
   MangaDatabaseItemGenres(this.genres, this.sourceName);
 
   @HiveField(1)

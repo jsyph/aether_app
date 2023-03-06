@@ -1,11 +1,9 @@
 import 'package:hive/hive.dart';
 
-import 'manga_database_item_properties.dart';
-
 part 'manga_database_item_rating.g.dart';
 
 @HiveType(typeId: 4)
-class MangaDatabaseItemRating extends MangaDatabaseItemProperty {
+class MangaDatabaseItemRating {
   MangaDatabaseItemRating(this.rating, this.sourceName);
 
   @HiveField(0)

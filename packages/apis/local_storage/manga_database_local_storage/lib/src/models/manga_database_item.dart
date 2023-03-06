@@ -5,7 +5,7 @@ import 'models.dart';
 
 part 'manga_database_item.g.dart';
 
-@HiveType(typeId: 7)
+@HiveType(typeId: 8)
 class MangaDatabaseItem extends HiveObject {
   MangaDatabaseItem({
     required this.id,
@@ -15,6 +15,7 @@ class MangaDatabaseItem extends HiveObject {
     required this.titles,
     required this.urls,
     required this.rating,
+    required this.contentType,
   });
 
   /// Create empty instance with a unique id
@@ -27,8 +28,12 @@ class MangaDatabaseItem extends HiveObject {
       rating: [],
       titles: [],
       urls: [],
+      contentType: MangaDatabaseItemMangaType.unknown,
     );
   }
+
+  @HiveField(7)
+  MangaDatabaseItemMangaType? contentType;
 
   @HiveField(0)
   List<MangaDatabaseItemCoverImage> coverImages;
@@ -70,15 +75,16 @@ class MangaDatabaseItem extends HiveObject {
   }
 
   /// adds data to current database item and returns it
-  void addData(
-    String mangaSourceName,
-    String mangaCoverImage,
-    String mangaDescription,
-    List<String> mangaGenres,
-    double mangaRating,
-    List<String> mangaTitles,
-    String mangaUri,
-  ) {
+  void addData({
+    required String mangaSourceName,
+    required String mangaCoverImage,
+    required String mangaDescription,
+    required List<String> mangaGenres,
+    required double mangaRating,
+    required List<String> mangaTitles,
+    required String mangaUrl,
+    MangaDatabaseItemMangaType? mangaContentType,
+  }) {
     coverImages.add(
       MangaDatabaseItemCoverImage(mangaCoverImage, mangaSourceName),
     );
@@ -106,7 +112,12 @@ class MangaDatabaseItem extends HiveObject {
     }
 
     urls.add(
-      MangaDatabaseItemUrl(mangaUri, mangaSourceName),
+      MangaDatabaseItemUrl(mangaUrl, mangaSourceName),
     );
+
+    // if manga content type is not null , then assign it
+    if (mangaContentType != null) {
+      contentType = mangaContentType;
+    }
   }
 }
