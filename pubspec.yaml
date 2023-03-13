@@ -28,7 +28,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  cookie_jar: ^3.0.1
+  app_logging:
+    path: ./packages/utilities/app_logging
+  asura_scans:
+    path: ./packages/apis/manga/asura_scans
   cupertino_icons: ^1.0.2
   custom_dio:
     path: ./packages/utilities/network/custom_dio
@@ -38,7 +41,8 @@ dependencies:
   flutter_inappwebview: ^5.7.2+3
   hive: ^2.2.3
   html: ^0.15.1
-  logger: ^1.1.0
+  manga_source_base:
+    path: ./packages/apis/manga/manga_source_base
   meta: null
 
 dev_dependencies:

@@ -5,11 +5,11 @@ import 'package:dio/dio.dart';
 
 extension DioInterceptors on Dio {
   Dio withRateLimit(
-    int timeBetweenRequestsInSeconds,
+    Duration duration,
   ) =>
       _addUniqueInterceptor(
         RateInterceptor(
-          timeBetweenRequestsInSeconds,
+          duration,
         ),
       );
 
@@ -24,7 +24,7 @@ extension DioInterceptors on Dio {
     // if intercepted is not already added, then add it
     if (!interceptors.contains(interceptor)) {
       return this..interceptors.add(interceptor);
-    } 
+    }
     // else return same instance without doing anything
     return this;
   }

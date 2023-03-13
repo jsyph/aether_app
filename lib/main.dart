@@ -1,6 +1,8 @@
+import 'package:asura_scans/asura_scans.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:custom_dio/custom_dio.dart';
+import 'package:manga_source_base/manga_source_base.dart';
 
 void main() {
   runApp(const MyApp());
@@ -50,19 +52,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -80,21 +69,20 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: FutureBuilder(
+        child: StreamBuilder(
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Text(snapshot.data!.data.toString());
+              return Text(
+                snapshot.data!.toString(),
+                softWrap: true,
+              );
             }
             return const CircularProgressIndicator();
           },
-          future: Dio().bypassCloudflare().get('https://realmscans.com/'),
+          stream: AsuraScans().getAllManga(),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

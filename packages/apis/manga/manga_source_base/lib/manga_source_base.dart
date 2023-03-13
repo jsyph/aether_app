@@ -1,6 +1,8 @@
 library manga_source_base;
 
-export 'src/manga_source.dart';
+export 'src/source_base/source_base.dart';
+
+export 'src/source_templates/source_templates.dart';
 
 // exports recently updated manga mixin
 export 'src/recently_updated_manga/recently_updated_manga.dart';

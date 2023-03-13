@@ -1,66 +1,68 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
 /// Limits the number of requests sent by the dio client
 /// `allowedRequests` is the number of requests per `perTime` in seconds
 class RateInterceptor extends Interceptor {
-  RateInterceptor(this.timeBetweenRequestsInSeconds);
+  RateInterceptor(this.duration);
 
-  final logger = Logger();
   /// The number of requests allowed
-  final int timeBetweenRequestsInSeconds;
+  final Duration duration;
 
   // The value of milliSecondsSinceEpoch of the previous request
-  // persists accross all instances created
+  // persists across all instances created
   static int? _previousRequestTimeTag;
 
+  final _logger = Logger();
+
   @override
-  void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
-    // if _previousRequestTimeTag is null, asign it, then leave intercepter
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    // if _previousRequestTimeTag is null, assign it, then leave interceptor
     if (_previousRequestTimeTag == null) {
-      logger.v('_previousRequestTimeTag is null');
+      _logger.v('_previousRequestTimeTag is null');
       _previousRequestTimeTag = DateTime.now().millisecondsSinceEpoch;
       return handler.next(options);
     }
 
     final currentTimeTag = DateTime.now().millisecondsSinceEpoch;
-    logger.d('currentTimeTag=$currentTimeTag');
+    _logger.d('currentTimeTag=$currentTimeTag');
 
-    logger.d('_previousRequestTimeTag=$_previousRequestTimeTag');
+    _logger.d('_previousRequestTimeTag=$_previousRequestTimeTag');
 
-    // Calculate time epased between the 2 time tags
+    // Calculate time elapsed between the 2 time tags
     final timeElapsed = currentTimeTag - _previousRequestTimeTag!;
-    logger.d('timeElapsed=$timeElapsed');
+    _logger.d('timeElapsed=$timeElapsed');
 
-    // Multiply timeBetweenRequestsInSeconds to convert it to milliseconds
-    final timeBetweenRequestsInMilliSeconds =
-        timeBetweenRequestsInSeconds * 1000;
-    logger.d('timeBetweenRequestsInMilliSeconds=$timeBetweenRequestsInMilliSeconds');
+    final timeBetweenRequestsInMilliSeconds = duration.inMilliseconds;
 
     // If timeElapsed is greater than the timeBetweenRequestsInMilliSeconds, then exit Interceptor,
     if (timeElapsed > timeBetweenRequestsInMilliSeconds) {
-      logger.d('timeElapsed is greater than timeBetweenRequestsInMilliSeconds');
+      _logger
+          .d('timeElapsed is greater than timeBetweenRequestsInMilliSeconds');
 
       // set _previousRequestTimeTag to now
       _previousRequestTimeTag = DateTime.now().millisecondsSinceEpoch;
 
       return handler.next(options);
 
-      // else then wait until sufficnt time has passed
+      // else then wait until sufficient time has passed
     } else {
-      // get diffrence between timeBetweenRequestsInMilliSeconds and timeElapsed, to get the time to wait in milliseconds
-      final timeDiffrence = timeBetweenRequestsInMilliSeconds - timeElapsed;
-      logger.d('timeDiffrence=$timeDiffrence');
+      // get difference between timeBetweenRequestsInMilliSeconds and timeElapsed, to get the time to wait in milliseconds
+      final timeDifference = timeBetweenRequestsInMilliSeconds - timeElapsed;
+      _logger.d('timeDifference=$timeDifference milliseconds');
 
-      // wait timeDiffrence then exit Interceptor
-      logger.v('Waiting for future to complete');
-      return await Future.delayed(
-        Duration(milliseconds: timeDiffrence),
+      // wait timeDifference then exit Interceptor
+      _logger.v('Starting timer');
+
+      Timer(
+        Duration(milliseconds: timeDifference),
         () {
           // set _previousRequestTimeTag to now, after future has been waited
           _previousRequestTimeTag = DateTime.now().millisecondsSinceEpoch;
 
+          _logger.v('Timer finished');
           return handler.next(options);
         },
       );

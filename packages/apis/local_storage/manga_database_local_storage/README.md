@@ -1,5 +1,10 @@
 # Local manga database to store manga from multiple sources
 
+## TODO:
+- add manga releasedOn
+- add manga status
+- add manga author
+
 ## Docs
 ```dart
 // Initialize using:

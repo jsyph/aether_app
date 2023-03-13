@@ -1,0 +1,3 @@
+- Updated manga_source_base package and create tests
+- Created asura_scans package
+- Refactored Code

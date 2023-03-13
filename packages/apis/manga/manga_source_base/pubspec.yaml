@@ -1,14 +1,20 @@
 name: manga_source_base
 description: Contains base classes for manga sources
 version: 1.0.0
+publish_to: none
 # repository: https://github.com/my_org/my_repo
-
 environment:
   sdk: '>=2.19.2 <3.0.0'
 
-# dependencies:
-#   path: ^1.8.0
+dependencies:
+  app_logging:
+    path: ../../../utilities/app_logging
+  compute: ^1.0.2
+  dio: ^5.0.1
+  html: ^0.15.2
+  intl: ^0.18.0
 
 dev_dependencies:
+  alfred: ^1.1.0+1
   lints: ^2.0.0
   test: ^1.21.0

@@ -21,7 +21,9 @@ void main() async {
   test(
     'Test RateLimitInterceptor',
     () async {
-      final newDioClient = Dio().withRateLimit(2);
+      final newDioClient = Dio().withRateLimit(
+        Duration(seconds: 2),
+      );
       // start time
       final startTime = DateTime.now().millisecondsSinceEpoch;
       await newDioClient.get(simpleWebpageAddress);
@@ -35,5 +37,5 @@ void main() async {
     },
   );
 
-  // Cannot test webview stuff, it doesn't work here, hopefully it works when the app is running ¯\_(ツ)_/¯ 
+  // Cannot test webview stuff, it doesn't work here, hopefully it works when the app is running ¯\_(ツ)_/¯
 }
