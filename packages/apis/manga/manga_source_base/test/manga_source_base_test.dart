@@ -29,13 +29,14 @@ void main() async {
                 () async {
                   final testClass = MangaStreamTestClass(
                     [
-                      'http://localhost:3000/manga_stream/manga_information/no_author/test_no_author_1.html',
-                      'http://localhost:3000/manga_stream/manga_information/no_author/test_no_author_2.html',
-                      'http://localhost:3000/manga_stream/manga_information/no_author/test_no_author_3.html',
-                      'http://localhost:3000/manga_stream/manga_information/no_author/test_no_author_4.html',
-                      'http://localhost:3000/manga_stream/manga_information/with_author/test_with_author_1.html',
-                      'http://localhost:3000/manga_stream/manga_information/with_author/test_with_author_2.html',
-                      'http://localhost:3000/manga_stream/manga_information/with_author/test_with_author_3.html',
+                      'http://localhost:3000/manga_stream/manga_information/test_site_1.html',
+                      'http://localhost:3000/manga_stream/manga_information/test_site_2.html',
+                      'http://localhost:3000/manga_stream/manga_information/test_site_3.html',
+                      'http://localhost:3000/manga_stream/manga_information/test_site_4.html',
+                      'http://localhost:3000/manga_stream/manga_information/test_site_5.html',
+                      'http://localhost:3000/manga_stream/manga_information/test_site_6.html',
+                      'http://localhost:3000/manga_stream/manga_information/test_site_7.html',
+                      'http://localhost:3000/manga_stream/manga_information/test_site_8.html',
                     ],
                   );
 
@@ -111,6 +112,30 @@ void main() async {
                       'contentType': isNotNull,
                       'author': isNotNull,
                       'altTitles': isNull,
+                    },
+                    {
+                      'title': isNotNull,
+                      'releaseStatus': isNotNull,
+                      'rating': isNotNull,
+                      'genres': isNotNull,
+                      'description': isNotNull,
+                      'dateReleasedOn': isNotNull,
+                      'coverImageUrl': isNotNull,
+                      'contentType': isNotNull,
+                      'author': isNotNull,
+                      'altTitles': isNotNull,
+                    },
+                    {
+                      'title': isNotNull,
+                      'releaseStatus': isNotNull,
+                      'rating': isNotNull,
+                      'genres': isNotNull,
+                      'description': isNotNull,
+                      'dateReleasedOn': isNotNull,
+                      'coverImageUrl': isNotNull,
+                      'contentType': isNotNull,
+                      'author': isNotNull,
+                      'altTitles': isNotNull,
                     },
                     {
                       'title': isNotNull,
