@@ -5,3 +5,7 @@ commit 14
 
 commit 15:
 - Added more test sites to manga_source_base
+
+commit 16:
+- Added cosmic_scans package
+- Added void_scans package

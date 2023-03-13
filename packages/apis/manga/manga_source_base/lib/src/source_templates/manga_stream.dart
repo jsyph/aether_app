@@ -91,7 +91,8 @@ abstract class MangaStreamTemplate extends MangaSourceBase {
 
     final unDividedDouble = double.parse(ratingAsString);
 
-    final unFormattedDouble = unDividedDouble / 10.0;
+    // because rating is out of 10 and should be out of 5
+    final unFormattedDouble = unDividedDouble / 2.0;
 
     final formattedDouble = double.parse(unFormattedDouble.toStringAsFixed(1));
 

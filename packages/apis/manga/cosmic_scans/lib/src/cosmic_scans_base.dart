@@ -1,9 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:custom_dio/custom_dio.dart';
+import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 import 'package:manga_source_base/manga_source_base.dart';
 
-class AsuraScans extends MangaStreamTemplate {
+class CosmicScans extends MangaStreamTemplate {
   @override
   Dio get dioClient => Dio().withRateLimit(
         Duration(seconds: 5),
@@ -12,7 +12,7 @@ class AsuraScans extends MangaStreamTemplate {
   @override
   Future<List<String>> getAllMangaUrls() async {
     final response =
-        await dioClient.get('https://www.asurascans.com/manga/list-mode/');
+        await dioClient.get('https://cosmicscans.com/manga/list-mode/');
 
     final document = parse(response.data);
 

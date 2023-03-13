@@ -1,0 +1,18 @@
+name: cosmic_scans
+description: A starting point for Dart libraries or applications.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=2.19.4 <3.0.0'
+
+dependencies:
+  custom_dio:
+    path: ../../../utilities/network/custom_dio
+  dio: ^5.0.2
+  html: ^0.15.2
+  manga_source_base:
+    path: ../manga_source_base
+dev_dependencies:
+  lints: ^2.0.0
+  test: ^1.21.0
