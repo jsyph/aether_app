@@ -75,7 +75,7 @@ mixin MangaInformationMixin {
       releaseStatus: status,
       contentType: contentType,
       author: author,
-      dateReleasedOn: dateReleasedOn,
+      datePostedOn: dateReleasedOn,
     );
   }
 

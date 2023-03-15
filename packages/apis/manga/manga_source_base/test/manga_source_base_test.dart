@@ -175,7 +175,7 @@ void main() async {
                       expectedTestResults[i]['description'],
                     );
                     expect(
-                      mangaInfos[i].dateReleasedOn,
+                      mangaInfos[i].datePostedOn,
                       expectedTestResults[i]['dateReleasedOn'],
                     );
                     expect(

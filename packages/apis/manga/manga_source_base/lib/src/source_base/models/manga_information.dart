@@ -12,14 +12,14 @@ class MangaInformation {
     required this.releaseStatus,
     required this.contentType,
     required this.author,
-    required this.dateReleasedOn,
+    required this.datePostedOn,
   });
 
   final List<String>? altTitles;
   final String? author;
   final MangaContentType? contentType;
   final String coverImageUrl;
-  final DateTime? dateReleasedOn;
+  final DateTime? datePostedOn;
   final String description;
   final List<String> genres;
   final double rating;
@@ -29,6 +29,6 @@ class MangaInformation {
   @override
   String toString() {
     return '''MangaInformation(\ntitle: $title,\naltTitles: $altTitles,\ndescription: $description,\ngenres: $genres,\nrating: 
-    $rating,\ncoverImageUrl: $coverImageUrl,\nreleaseStatus: $releaseStatus,\ncontentType: $contentType,\nauthor: $author,\ndateReleasedOn: $dateReleasedOn,\n),\n''';
+    $rating,\ncoverImageUrl: $coverImageUrl,\nreleaseStatus: $releaseStatus,\ncontentType: $contentType,\nauthor: $author,\ndatePostedOn: $datePostedOn,\n),\n''';
   }
 }
