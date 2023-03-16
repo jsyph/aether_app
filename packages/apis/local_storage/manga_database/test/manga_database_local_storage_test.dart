@@ -13,7 +13,7 @@ void main() async {
 
   final newMangaRecord = await mangaDb.addManga(
     sourceName: 'Asura Scans',
-    titles: ['Solo Leveling', 'Na Honjaman Lebel-eob', 'Only I Level Up'],
+    title: 'Solo Leveling',
     description:
         '''10 years ago, after “the Gate” that connected the real world with the monster world opened, some of the ordinary, everyday people received the power to hunt monsters within the Gate.
             They are known as “Hunters”. However, not all Hunters are powerful. My name is Sung Jin-Woo, an E-rank Hunter.
@@ -30,6 +30,7 @@ void main() async {
     author: '추공 (Chugong)',
     datePostedOn: DateTime.parse('2021-03-03T14:36:02+00:00'),
     releaseStatus: ReleaseStatus.onGoing,
+    altTitles: ['Na Honjaman Lebel-eob', 'Only I Level Up'],
   );
 
   group(
@@ -77,11 +78,7 @@ void main() async {
         () async {
           final secondDatabaseItem = await mangaDb.addManga(
             sourceName: 'Flame Scans',
-            titles: [
-              'Solo Leveling',
-              'Na Honjaman Lebel-eob',
-              'Only I Level Up'
-            ],
+            title: 'Solo Leveling',
             description:
                 '''10 years ago, after “the Gate” that connected the real world with the monster world opened, some of the ordinary, everyday people received the power to hunt monsters within the Gate.
             They are known as “Hunters”. However, not all Hunters are powerful. My name is Sung Jin-Woo, an E-rank Hunter.
@@ -98,6 +95,7 @@ void main() async {
             author: '추공 (Chugong)',
             datePostedOn: DateTime.parse('2021-03-03T14:36:02+00:00'),
             releaseStatus: ReleaseStatus.onGoing,
+            altTitles: ['Na Honjaman Lebel-eob', 'Only I Level Up'],
           );
 
           // Check if both items have same id
@@ -110,9 +108,7 @@ void main() async {
         () async {
           await mangaDb.addManga(
             sourceName: 'Flame Scans',
-            titles: [
-              'Dr. Player',
-            ],
+            title: 'Dr. Player',
             description:
                 '''[By the studio that brought you <My School Life Pretending To Be a Worthless Person> and <Damn Reincarnation>!]
 Raymond was the illegitimate son of the king.
@@ -130,6 +126,7 @@ Raymond gained medical knowledge that had not existed in this world. The great l
             author: 'Yooin',
             datePostedOn: DateTime.parse('2022-12-02T13:38:13+00:00'),
             releaseStatus: ReleaseStatus.onGoing,
+            altTitles: null,
           );
 
           final exportedDatabase = await mangaDb.exportAsJson();
@@ -147,24 +144,24 @@ Raymond gained medical knowledge that had not existed in this world. The great l
           final mangaToBeAdded = [
             {
               'author': '',
-              'contentType': 'manhwa',
-              'coverImages': [
+              'content_type': 'manhwa',
+              'cover_images': [
                 {
-                  'sourceName': 'AsuraScans',
+                  'source_name': 'AsuraScans',
                   'url':
                       'https://www.asurascans.com/wp-content/uploads/2022/11/DemonLordCover02.png',
                 },
               ],
               'descriptions': [
                 {
-                  'sourceName': 'AsuraScans',
+                  'source_name': 'AsuraScans',
                   'text':
                       '''“Demon Lord.”\nThat’s…\nWhat they used to call me in my past life, before I became human.''',
                 },
               ],
               'genres': [
                 {
-                  'sourceName': 'AsuraScans',
+                  'source_name': 'AsuraScans',
                   'genres': [
                     'Action',
                     'Adventure',
@@ -175,33 +172,34 @@ Raymond gained medical knowledge that had not existed in this world. The great l
                 }
               ],
               'id': '21b0b9ae-d682-40f7-bfa5-b08fc8740804',
-              'postedOn': [
+              'posted_on': [
                 {
-                  'sourceName': 'AsuraScans',
-                  'postedOn': DateTime.parse('2022-11-18T13:10:14+00:00').toString(),
+                  'source_name': 'AsuraScans',
+                  'posted_on': '2022-11-18T13:10:14+00:00',
                 },
               ],
               'rating': [
                 {
-                  'sourceName': 'AsuraScans',
+                  'source_name': 'AsuraScans',
                   'rating': 9.7,
                 }
               ],
-              'releaseStatus': [
+              'release_status': [
                 {
-                  'sourceName': 'AsuraScans',
-                  'status': 'on-going',
+                  'source_name': 'AsuraScans',
+                  'status': 'on_going',
                 }
               ],
               'titles': [
                 {
-                  'sourceName': 'AsuraScans',
+                  'source_name': 'AsuraScans',
                   'title': 'Demon Lord’s Martial Arts Ascension'
                 },
               ],
+              'alt_titles': null,
               'urls': [
                 {
-                  'sourceName': 'AsuraScans',
+                  'source_name': 'AsuraScans',
                   'url':
                       'https://www.asurascans.com/manga/1672760368-demon-lords-martial-arts-ascension/',
                 }
@@ -210,6 +208,11 @@ Raymond gained medical knowledge that had not existed in this world. The great l
           ];
 
           await mangaDb.loadFromJson(mangaToBeAdded);
+
+          final searchResult = await mangaDb
+              .exactTitleSearch('Demon Lord’s Martial Arts Ascension');
+
+          expect(searchResult, isNotNull);
         },
       );
 

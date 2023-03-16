@@ -60,7 +60,8 @@ class LocalMangaDatabase {
   /// Add manga to database, if it exists then append to it, else creates a new entry
   Future<MangaDatabaseItem> addManga({
     required String sourceName,
-    required List<String> titles,
+    required String title,
+    required List<String>? altTitles,
     required String description,
     required List<String> genres,
     required double rating,
@@ -71,8 +72,14 @@ class LocalMangaDatabase {
     required DateTime datePostedOn,
     required ReleaseStatus releaseStatus,
   }) async {
+    List<String> allTitles = [title];
+
+    if (altTitles != null) {
+      allTitles.addAll(altTitles);
+    }
+
     // Check if manga already in database
-    for (final title in titles) {
+    for (final title in allTitles) {
       final possibleMangaEntry = await exactTitleSearch(title);
 
       // if a possible manga entry is found, then add to it and save
@@ -89,12 +96,13 @@ class LocalMangaDatabase {
           mangaDescription: description,
           mangaGenres: genres,
           mangaRating: rating,
-          mangaTitles: titles,
+          mangaTitle: title,
           mangaUrl: url,
           mangaContentType: contentType,
           mangaAuthor: author,
           mangaPostedOn: datePostedOn,
           mangaReleaseStatus: releaseStatus,
+          mangaAltTitles: altTitles,
         );
 
         // delete old record
@@ -126,19 +134,23 @@ class LocalMangaDatabase {
         mangaDescription: description,
         mangaGenres: genres,
         mangaRating: rating,
-        mangaTitles: titles,
+        mangaTitle: title,
         mangaUrl: url,
         mangaContentType: contentType,
         mangaAuthor: author,
         mangaPostedOn: datePostedOn,
         mangaReleaseStatus: releaseStatus,
+        mangaAltTitles: altTitles,
       );
 
     _logger.i('Created new manga entry: $newMangaDatabaseItem');
 
-    // Put data at key
-    final entryKey =
-        MangaDatabaseItemKey(newMangaDatabaseItem.id, titles).toString();
+    // create key
+    final entryKey = MangaDatabaseItemKey(
+      newMangaDatabaseItem.id,
+      newMangaDatabaseItem.allTitles,
+    ).toString();
+
     await _database.put(
       entryKey,
       newMangaDatabaseItem,

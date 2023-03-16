@@ -116,18 +116,18 @@ MangaDatabaseItemReleaseStatus _$MangaDatabaseItemReleaseStatusFromJson(
         Map<String, dynamic> json) =>
     MangaDatabaseItemReleaseStatus(
       $enumDecode(_$ReleaseStatusEnumMap, json['status']),
-      json['sourceName'] as String,
+      json['source_name'] as String,
     );
 
 Map<String, dynamic> _$MangaDatabaseItemReleaseStatusToJson(
         MangaDatabaseItemReleaseStatus instance) =>
     <String, dynamic>{
-      'sourceName': instance.sourceName,
+      'source_name': instance.sourceName,
       'status': _$ReleaseStatusEnumMap[instance.status]!,
     };
 
 const _$ReleaseStatusEnumMap = {
-  ReleaseStatus.onGoing: 'onGoing',
+  ReleaseStatus.onGoing: 'on_going',
   ReleaseStatus.dropped: 'dropped',
   ReleaseStatus.completed: 'completed',
   ReleaseStatus.cancelled: 'cancelled',

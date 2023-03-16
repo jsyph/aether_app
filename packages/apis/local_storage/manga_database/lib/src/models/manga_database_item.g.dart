@@ -17,45 +17,48 @@ class MangaDatabaseItemAdapter extends TypeAdapter<MangaDatabaseItem> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MangaDatabaseItem(
-      fields[5] as String,
-      (fields[2] as List).cast<MangaDatabaseItemCoverImage>(),
-      (fields[3] as List).cast<MangaDatabaseItemDescription>(),
-      (fields[4] as List).cast<MangaDatabaseItemGenres>(),
-      (fields[9] as List).cast<MangaDatabaseItemTitle>(),
-      (fields[10] as List).cast<MangaDatabaseItemUrl>(),
-      (fields[7] as List).cast<MangaDatabaseItemRating>(),
-      fields[1] as MangaDatabaseItemMangaType?,
-      fields[0] as String?,
-      (fields[6] as List).cast<MangaDatabaseItemPostedOn>(),
-      (fields[8] as List).cast<MangaDatabaseItemReleaseStatus>(),
+      fields[6] as String,
+      (fields[3] as List).cast<MangaDatabaseItemCoverImage>(),
+      (fields[4] as List).cast<MangaDatabaseItemDescription>(),
+      (fields[5] as List).cast<MangaDatabaseItemGenres>(),
+      (fields[10] as List).cast<MangaDatabaseItemTitle>(),
+      (fields[11] as List).cast<MangaDatabaseItemUrl>(),
+      (fields[8] as List).cast<MangaDatabaseItemRating>(),
+      fields[2] as MangaDatabaseItemMangaType?,
+      fields[1] as String?,
+      (fields[7] as List).cast<MangaDatabaseItemPostedOn>(),
+      (fields[9] as List).cast<MangaDatabaseItemReleaseStatus>(),
+      (fields[0] as List?)?.cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, MangaDatabaseItem obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
-      ..write(obj.author)
+      ..write(obj.altTitles)
       ..writeByte(1)
-      ..write(obj.contentType)
+      ..write(obj.author)
       ..writeByte(2)
-      ..write(obj.coverImages)
+      ..write(obj.contentType)
       ..writeByte(3)
-      ..write(obj.descriptions)
+      ..write(obj.coverImages)
       ..writeByte(4)
-      ..write(obj.genres)
+      ..write(obj.descriptions)
       ..writeByte(5)
-      ..write(obj.id)
+      ..write(obj.genres)
       ..writeByte(6)
-      ..write(obj.postedOn)
+      ..write(obj.id)
       ..writeByte(7)
-      ..write(obj.rating)
+      ..write(obj.postedOn)
       ..writeByte(8)
-      ..write(obj.releaseStatus)
+      ..write(obj.rating)
       ..writeByte(9)
-      ..write(obj.titles)
+      ..write(obj.releaseStatus)
       ..writeByte(10)
+      ..write(obj.titles)
+      ..writeByte(11)
       ..write(obj.urls);
   }
 
@@ -74,47 +77,64 @@ class MangaDatabaseItemAdapter extends TypeAdapter<MangaDatabaseItem> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-MangaDatabaseItem _$MangaDatabaseItemFromJson(Map<String, dynamic> json) =>
-    MangaDatabaseItem(
-      json['id'] as String,
-      (json['cover_images'] as List<dynamic>)
-          .map((e) =>
-              MangaDatabaseItemCoverImage.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      (json['descriptions'] as List<dynamic>)
-          .map((e) =>
-              MangaDatabaseItemDescription.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      (json['genres'] as List<dynamic>)
-          .map((e) =>
-              MangaDatabaseItemGenres.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      (json['titles'] as List<dynamic>)
-          .map(
-              (e) => MangaDatabaseItemTitle.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      (json['urls'] as List<dynamic>)
-          .map((e) => MangaDatabaseItemUrl.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      (json['rating'] as List<dynamic>)
-          .map((e) =>
-              MangaDatabaseItemRating.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      $enumDecodeNullable(
-          _$MangaDatabaseItemMangaTypeEnumMap, json['content_type']),
-      json['author'] as String?,
-      (json['posted_on'] as List<dynamic>)
-          .map((e) =>
-              MangaDatabaseItemPostedOn.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      (json['release_status'] as List<dynamic>)
-          .map((e) => MangaDatabaseItemReleaseStatus.fromJson(
-              e as Map<String, dynamic>))
-          .toList(),
-    );
+MangaDatabaseItem _$MangaDatabaseItemFromJson(Map<String, dynamic> json) {
+  $checkKeys(
+    json,
+    allowedKeys: const [
+      'alt_titles',
+      'author',
+      'content_type',
+      'cover_images',
+      'descriptions',
+      'genres',
+      'id',
+      'posted_on',
+      'rating',
+      'release_status',
+      'titles',
+      'urls'
+    ],
+  );
+  return MangaDatabaseItem(
+    json['id'] as String,
+    (json['cover_images'] as List<dynamic>)
+        .map((e) =>
+            MangaDatabaseItemCoverImage.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    (json['descriptions'] as List<dynamic>)
+        .map((e) =>
+            MangaDatabaseItemDescription.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    (json['genres'] as List<dynamic>)
+        .map((e) => MangaDatabaseItemGenres.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    (json['titles'] as List<dynamic>)
+        .map((e) => MangaDatabaseItemTitle.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    (json['urls'] as List<dynamic>)
+        .map((e) => MangaDatabaseItemUrl.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    (json['rating'] as List<dynamic>)
+        .map((e) => MangaDatabaseItemRating.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    $enumDecodeNullable(
+        _$MangaDatabaseItemMangaTypeEnumMap, json['content_type']),
+    json['author'] as String?,
+    (json['posted_on'] as List<dynamic>)
+        .map((e) =>
+            MangaDatabaseItemPostedOn.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    (json['release_status'] as List<dynamic>)
+        .map((e) =>
+            MangaDatabaseItemReleaseStatus.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    (json['alt_titles'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  );
+}
 
 Map<String, dynamic> _$MangaDatabaseItemToJson(MangaDatabaseItem instance) =>
     <String, dynamic>{
+      'alt_titles': instance.altTitles,
       'author': instance.author,
       'content_type': _$MangaDatabaseItemMangaTypeEnumMap[instance.contentType],
       'cover_images': instance.coverImages,

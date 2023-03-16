@@ -1,0 +1,1 @@
+export 'manga_search_result.dart';

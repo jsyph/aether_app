@@ -3,6 +3,6 @@
 /// More dartdocs go here.
 library manga_repository;
 
-export 'src/manga_repository_base.dart';
+export 'src/manga_repository.dart';
 
 // TODO: Export any libraries intended for clients of this package.

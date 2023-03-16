@@ -7,7 +7,7 @@ import 'models.dart';
 part 'manga_database_item.g.dart';
 
 @HiveType(typeId: 11)
-@JsonSerializable()
+@JsonSerializable(disallowUnrecognizedKeys: true)
 class MangaDatabaseItem extends HiveObject {
   MangaDatabaseItem(
     this.id,
@@ -21,6 +21,7 @@ class MangaDatabaseItem extends HiveObject {
     this.author,
     this.postedOn,
     this.releaseStatus,
+    this.altTitles,
   );
 
   /// Create empty instance with a unique id
@@ -37,6 +38,7 @@ class MangaDatabaseItem extends HiveObject {
       '',
       [],
       [],
+      [],
     );
   }
 
@@ -44,56 +46,69 @@ class MangaDatabaseItem extends HiveObject {
       _$MangaDatabaseItemFromJson(json);
 
   @HiveField(0)
-  String? author;
+  @JsonKey(name: 'alt_titles')
+  List<String>? altTitles;
 
   @HiveField(1)
-  @JsonKey(name:'content_type')
-  MangaDatabaseItemMangaType? contentType;
+  String? author;
 
   @HiveField(2)
-  @JsonKey(name:'cover_images')
-  List<MangaDatabaseItemCoverImage> coverImages;
+  @JsonKey(name: 'content_type')
+  MangaDatabaseItemMangaType? contentType;
 
   @HiveField(3)
-  List<MangaDatabaseItemDescription> descriptions;
+  @JsonKey(name: 'cover_images')
+  List<MangaDatabaseItemCoverImage> coverImages;
 
   @HiveField(4)
+  List<MangaDatabaseItemDescription> descriptions;
+
+  @HiveField(5)
   List<MangaDatabaseItemGenres> genres;
 
   // id should never change
-  @HiveField(5)
+  @HiveField(6)
   final String id;
 
-  @HiveField(6)
-  @JsonKey(name:'posted_on')
+  @HiveField(7)
+  @JsonKey(name: 'posted_on')
   List<MangaDatabaseItemPostedOn> postedOn;
 
-  @HiveField(7)
+  @HiveField(8)
   List<MangaDatabaseItemRating> rating;
 
-  @HiveField(8)
-  @JsonKey(name:'release_status')
+  @HiveField(9)
+  @JsonKey(name: 'release_status')
   List<MangaDatabaseItemReleaseStatus> releaseStatus;
 
-  @HiveField(9)
+  @HiveField(10)
   // There should be no duplicates
   List<MangaDatabaseItemTitle> titles;
 
-  @HiveField(10)
+  @HiveField(11)
   List<MangaDatabaseItemUrl> urls;
 
   @override
   String toString() {
     // converts class to string interpretation
-    return 'MangaDatabaseItem(\nid: $id,\ncoverImages: $coverImages,\ndescriptions: $descriptions,\ngenres: $genres,\nrating: $rating,\ntitles; $titles,\nuri: $urls,\n),\n';
+    return 'MangaDatabaseItem(\nid: $id,\ncoverImages: $coverImages,\ndescriptions: $descriptions,\ngenres: $genres,\nrating: $rating,\ntitles; $titles,\naltTitles: $altTitles,\nuri: $urls,\n),\n';
   }
 
   /// get al list containing all titles without source name
   List<String> get allTitles {
     List<String> results = [];
-    for (final title in titles) {
-      results.add(title.title);
+    results.addAll(
+      titles.map((e) => e.title),
+    );
+
+    if (altTitles != null) {
+      results.addAll(
+        altTitles!,
+      );
     }
+
+    // remove duplicates
+    results = results.toSet().toList();
 
     return results;
   }
@@ -105,7 +120,8 @@ class MangaDatabaseItem extends HiveObject {
     required String mangaDescription,
     required List<String> mangaGenres,
     required double mangaRating,
-    required List<String> mangaTitles,
+    required String mangaTitle,
+    required List<String>? mangaAltTitles,
     required String mangaUrl,
     required MangaDatabaseItemMangaType? mangaContentType,
     required String? mangaAuthor,
@@ -129,12 +145,22 @@ class MangaDatabaseItem extends HiveObject {
     );
 
     // avoid duplicate titles
-    for (int i = 0; i < mangaTitles.length; i++) {
-      // if titles doesn't contain a mangaTitle, then add it
-      if (!allTitles.contains(mangaTitles[i])) {
-        titles.add(
-          MangaDatabaseItemTitle(mangaTitles[i], mangaSourceName),
-        );
+    // TODO: ADD TITLE
+    titles.add(
+      MangaDatabaseItemTitle(
+        mangaTitle,
+        mangaSourceName,
+      ),
+    );
+
+    // if altTitles and mangaAltTitles are not null,
+    // then check if altTitles contains any title from mangaAltTitles,
+    //if not then add it
+    if (altTitles != null && mangaAltTitles != null) {
+      for (final mangaAltTitle in mangaAltTitles) {
+        if (!altTitles!.contains(mangaAltTitle)) {
+          altTitles!.add(mangaAltTitle);
+        }
       }
     }
 
