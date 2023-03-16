@@ -1,27 +1,25 @@
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../models.dart';
 
 part 'manga_database_item_status.g.dart';
 
 @HiveType(typeId: 8)
 @JsonSerializable()
-class MangaDatabaseItemReleaseStatus {
+class MangaDatabaseItemReleaseStatus extends MangaDatabaseItemProperty {
   MangaDatabaseItemReleaseStatus(
     this.status,
-    this.sourceName,
+    super.sourceName,
   );
 
   factory MangaDatabaseItemReleaseStatus.fromJson(Map<String, dynamic> json) =>
       _$MangaDatabaseItemReleaseStatusFromJson(json);
 
-  @HiveField(0)
-  @JsonKey(name: 'source_name')
-  final String sourceName;
-
   @HiveField(1)
   final ReleaseStatus status;
 
   /// Connect the generated [_$MangaDatabaseItemReleaseStatusToJson] function to the `toJson` method.
+  @override
   Map<String, dynamic> toJson() => _$MangaDatabaseItemReleaseStatusToJson(this);
 }
 

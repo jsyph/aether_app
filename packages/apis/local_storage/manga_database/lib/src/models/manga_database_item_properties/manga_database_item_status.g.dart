@@ -27,10 +27,10 @@ class MangaDatabaseItemReleaseStatusAdapter
   void write(BinaryWriter writer, MangaDatabaseItemReleaseStatus obj) {
     writer
       ..writeByte(2)
-      ..writeByte(0)
-      ..write(obj.sourceName)
       ..writeByte(1)
-      ..write(obj.status);
+      ..write(obj.status)
+      ..writeByte(0)
+      ..write(obj.sourceName);
   }
 
   @override

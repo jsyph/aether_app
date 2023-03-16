@@ -9,7 +9,7 @@ part of 'manga_database_item_rating.dart';
 class MangaDatabaseItemRatingAdapter
     extends TypeAdapter<MangaDatabaseItemRating> {
   @override
-  final int typeId = 4;
+  final int typeId = 7;
 
   @override
   MangaDatabaseItemRating read(BinaryReader reader) {
@@ -58,6 +58,6 @@ MangaDatabaseItemRating _$MangaDatabaseItemRatingFromJson(
 Map<String, dynamic> _$MangaDatabaseItemRatingToJson(
         MangaDatabaseItemRating instance) =>
     <String, dynamic>{
-      'rating': instance.rating,
       'source_name': instance.sourceName,
+      'rating': instance.rating,
     };

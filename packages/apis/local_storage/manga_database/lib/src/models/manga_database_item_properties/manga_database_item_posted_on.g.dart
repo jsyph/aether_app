@@ -9,7 +9,7 @@ part of 'manga_database_item_posted_on.dart';
 class MangaDatabaseItemPostedOnAdapter
     extends TypeAdapter<MangaDatabaseItemPostedOn> {
   @override
-  final int typeId = 10;
+  final int typeId = 6;
 
   @override
   MangaDatabaseItemPostedOn read(BinaryReader reader) {
@@ -18,8 +18,8 @@ class MangaDatabaseItemPostedOnAdapter
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MangaDatabaseItemPostedOn(
-      fields[1] as String,
-      fields[0] as DateTime,
+      fields[0] as String,
+      fields[1] as DateTime,
     );
   }
 
@@ -27,9 +27,9 @@ class MangaDatabaseItemPostedOnAdapter
   void write(BinaryWriter writer, MangaDatabaseItemPostedOn obj) {
     writer
       ..writeByte(2)
-      ..writeByte(0)
-      ..write(obj.postedOn)
       ..writeByte(1)
+      ..write(obj.postedOn)
+      ..writeByte(0)
       ..write(obj.sourceName);
   }
 
@@ -58,6 +58,6 @@ MangaDatabaseItemPostedOn _$MangaDatabaseItemPostedOnFromJson(
 Map<String, dynamic> _$MangaDatabaseItemPostedOnToJson(
         MangaDatabaseItemPostedOn instance) =>
     <String, dynamic>{
-      'posted_on': instance.postedOn.toIso8601String(),
       'source_name': instance.sourceName,
+      'posted_on': instance.postedOn.toIso8601String(),
     };

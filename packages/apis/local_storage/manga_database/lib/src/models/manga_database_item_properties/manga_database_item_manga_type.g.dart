@@ -9,7 +9,7 @@ part of 'manga_database_item_manga_type.dart';
 class MangaDatabaseItemMangaTypeAdapter
     extends TypeAdapter<MangaDatabaseItemMangaType> {
   @override
-  final int typeId = 7;
+  final int typeId = 5;
 
   @override
   MangaDatabaseItemMangaType read(BinaryReader reader) {

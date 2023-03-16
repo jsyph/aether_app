@@ -6,7 +6,7 @@ import 'models.dart';
 
 part 'manga_database_item.g.dart';
 
-@HiveType(typeId: 11)
+@HiveType(typeId: 0)
 @JsonSerializable(disallowUnrecognizedKeys: true)
 class MangaDatabaseItem extends HiveObject {
   MangaDatabaseItem(
@@ -145,7 +145,6 @@ class MangaDatabaseItem extends HiveObject {
     );
 
     // avoid duplicate titles
-    // TODO: ADD TITLE
     titles.add(
       MangaDatabaseItemTitle(
         mangaTitle,

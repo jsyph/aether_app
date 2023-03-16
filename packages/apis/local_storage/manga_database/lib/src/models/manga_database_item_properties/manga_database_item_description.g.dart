@@ -9,7 +9,7 @@ part of 'manga_database_item_description.dart';
 class MangaDatabaseItemDescriptionAdapter
     extends TypeAdapter<MangaDatabaseItemDescription> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
   MangaDatabaseItemDescription read(BinaryReader reader) {
@@ -27,10 +27,10 @@ class MangaDatabaseItemDescriptionAdapter
   void write(BinaryWriter writer, MangaDatabaseItemDescription obj) {
     writer
       ..writeByte(2)
-      ..writeByte(0)
-      ..write(obj.sourceName)
       ..writeByte(1)
-      ..write(obj.text);
+      ..write(obj.text)
+      ..writeByte(0)
+      ..write(obj.sourceName);
   }
 
   @override

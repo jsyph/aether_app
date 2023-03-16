@@ -1,12 +1,13 @@
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../models.dart';
 
 part 'manga_database_item_rating.g.dart';
 
-@HiveType(typeId: 4)
+@HiveType(typeId: 7)
 @JsonSerializable()
-class MangaDatabaseItemRating {
-  MangaDatabaseItemRating(this.rating, this.sourceName);
+class MangaDatabaseItemRating extends MangaDatabaseItemProperty {
+  MangaDatabaseItemRating(this.rating, super.sourceName);
 
   factory MangaDatabaseItemRating.fromJson(Map<String, dynamic> json) =>
       _$MangaDatabaseItemRatingFromJson(json);
@@ -14,14 +15,11 @@ class MangaDatabaseItemRating {
   @HiveField(1)
   final double rating;
 
-  @HiveField(0)
-  @JsonKey(name:'source_name')
-  final String sourceName;
+  @override
+  Map<String, dynamic> toJson() => _$MangaDatabaseItemRatingToJson(this);
 
   @override
   String toString() {
     return rating.toString();
   }
-
-  Map<String, dynamic> toJson() => _$MangaDatabaseItemRatingToJson(this);
 }

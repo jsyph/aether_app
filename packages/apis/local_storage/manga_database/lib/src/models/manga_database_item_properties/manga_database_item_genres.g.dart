@@ -9,7 +9,7 @@ part of 'manga_database_item_genres.dart';
 class MangaDatabaseItemGenresAdapter
     extends TypeAdapter<MangaDatabaseItemGenres> {
   @override
-  final int typeId = 2;
+  final int typeId = 3;
 
   @override
   MangaDatabaseItemGenres read(BinaryReader reader) {
@@ -58,6 +58,6 @@ MangaDatabaseItemGenres _$MangaDatabaseItemGenresFromJson(
 Map<String, dynamic> _$MangaDatabaseItemGenresToJson(
         MangaDatabaseItemGenres instance) =>
     <String, dynamic>{
-      'genres': instance.genres,
       'source_name': instance.sourceName,
+      'genres': instance.genres,
     };

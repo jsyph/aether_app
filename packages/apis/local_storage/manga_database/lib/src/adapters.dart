@@ -1,11 +1,8 @@
+import 'package:app_logging/app_logging.dart';
 import 'package:hive/hive.dart';
 import 'models/models.dart';
 
-void registerHiveAdapters() {
-  Hive.registerAdapter<MangaDatabaseItemCoverImage>(
-    MangaDatabaseItemCoverImageAdapter(),
-  );
-
+void registerHiveAdapters() { 
   Hive.registerAdapter<MangaDatabaseItemDescription>(
     MangaDatabaseItemDescriptionAdapter(),
   );
@@ -14,8 +11,23 @@ void registerHiveAdapters() {
     MangaDatabaseItemGenresAdapter(),
   );
 
+  Hive.registerAdapter<MangaDatabaseItemCoverImage>(
+    MangaDatabaseItemCoverImageAdapter(),
+  );
+
+  Hive.registerAdapter<MangaDatabaseItemMangaType>(
+    MangaDatabaseItemMangaTypeAdapter(),
+  );
+
+  Hive.registerAdapter<MangaDatabaseItemPostedOn>(
+    MangaDatabaseItemPostedOnAdapter(),
+  );
+
   Hive.registerAdapter<MangaDatabaseItemRating>(
     MangaDatabaseItemRatingAdapter(),
+  );
+  Hive.registerAdapter<MangaDatabaseItemReleaseStatus>(
+    MangaDatabaseItemReleaseStatusAdapter(),
   );
 
   Hive.registerAdapter<MangaDatabaseItemTitle>(
@@ -26,23 +38,15 @@ void registerHiveAdapters() {
     MangaDatabaseItemUrlAdapter(),
   );
 
-  Hive.registerAdapter(
-    MangaDatabaseItemMangaTypeAdapter(),
+  Hive.registerAdapter<MangaDatabaseItemProperty>(
+    MangaDatabaseItemPropertyAdapter(),
   );
 
   Hive.registerAdapter<MangaDatabaseItem>(
     MangaDatabaseItemAdapter(),
   );
 
-  Hive.registerAdapter<MangaDatabaseItemPostedOn>(
-    MangaDatabaseItemPostedOnAdapter(),
-  );
-
   Hive.registerAdapter<ReleaseStatus>(
     ReleaseStatusAdapter(),
-  );
-
-  Hive.registerAdapter<MangaDatabaseItemReleaseStatus>(
-    MangaDatabaseItemReleaseStatusAdapter(),
   );
 }

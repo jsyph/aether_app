@@ -9,7 +9,7 @@ part of 'manga_database_item_image.dart';
 class MangaDatabaseItemCoverImageAdapter
     extends TypeAdapter<MangaDatabaseItemCoverImage> {
   @override
-  final int typeId = 3;
+  final int typeId = 4;
 
   @override
   MangaDatabaseItemCoverImage read(BinaryReader reader) {
@@ -27,10 +27,10 @@ class MangaDatabaseItemCoverImageAdapter
   void write(BinaryWriter writer, MangaDatabaseItemCoverImage obj) {
     writer
       ..writeByte(2)
-      ..writeByte(0)
-      ..write(obj.sourceName)
       ..writeByte(1)
-      ..write(obj.url);
+      ..write(obj.url)
+      ..writeByte(0)
+      ..write(obj.sourceName);
   }
 
   @override

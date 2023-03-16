@@ -8,7 +8,7 @@ part of 'manga_database_item.dart';
 
 class MangaDatabaseItemAdapter extends TypeAdapter<MangaDatabaseItem> {
   @override
-  final int typeId = 11;
+  final int typeId = 0;
 
   @override
   MangaDatabaseItem read(BinaryReader reader) {

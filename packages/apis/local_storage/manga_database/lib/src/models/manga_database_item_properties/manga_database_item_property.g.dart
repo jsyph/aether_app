@@ -1,33 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'manga_database_item_url.dart';
+part of 'manga_database_item_property.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MangaDatabaseItemUrlAdapter extends TypeAdapter<MangaDatabaseItemUrl> {
+class MangaDatabaseItemPropertyAdapter
+    extends TypeAdapter<MangaDatabaseItemProperty> {
   @override
-  final int typeId = 11;
+  final int typeId = 1;
 
   @override
-  MangaDatabaseItemUrl read(BinaryReader reader) {
+  MangaDatabaseItemProperty read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return MangaDatabaseItemUrl(
-      fields[1] as String,
+    return MangaDatabaseItemProperty(
       fields[0] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, MangaDatabaseItemUrl obj) {
+  void write(BinaryWriter writer, MangaDatabaseItemProperty obj) {
     writer
-      ..writeByte(2)
       ..writeByte(1)
-      ..write(obj.url)
       ..writeByte(0)
       ..write(obj.sourceName);
   }
@@ -38,7 +36,7 @@ class MangaDatabaseItemUrlAdapter extends TypeAdapter<MangaDatabaseItemUrl> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MangaDatabaseItemUrlAdapter &&
+      other is MangaDatabaseItemPropertyAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -47,16 +45,19 @@ class MangaDatabaseItemUrlAdapter extends TypeAdapter<MangaDatabaseItemUrl> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-MangaDatabaseItemUrl _$MangaDatabaseItemUrlFromJson(
-        Map<String, dynamic> json) =>
-    MangaDatabaseItemUrl(
-      json['url'] as String,
-      json['source_name'] as String,
-    );
+MangaDatabaseItemProperty _$MangaDatabaseItemPropertyFromJson(
+    Map<String, dynamic> json) {
+  $checkKeys(
+    json,
+    allowedKeys: const ['source_name'],
+  );
+  return MangaDatabaseItemProperty(
+    json['source_name'] as String,
+  );
+}
 
-Map<String, dynamic> _$MangaDatabaseItemUrlToJson(
-        MangaDatabaseItemUrl instance) =>
+Map<String, dynamic> _$MangaDatabaseItemPropertyToJson(
+        MangaDatabaseItemProperty instance) =>
     <String, dynamic>{
       'source_name': instance.sourceName,
-      'url': instance.url,
     };
