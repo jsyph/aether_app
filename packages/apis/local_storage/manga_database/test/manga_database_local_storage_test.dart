@@ -1,9 +1,6 @@
 import 'dart:io';
-import 'package:app_logging/app_logging.dart';
 import 'package:hive/hive.dart';
 import 'package:manga_database/manga_database.dart';
-import 'package:manga_database/src/models/manga_database_item_properties/manga_database_item_manga_type.dart';
-import 'package:manga_database/src/models/models.dart';
 import 'package:test/test.dart';
 
 void main() async {

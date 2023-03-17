@@ -3,11 +3,9 @@ import 'dart:async';
 import 'package:app_logging/app_logging.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
+import 'package:manga_source_base/manga_source_base.dart';
 import 'manga_information_mixin.dart';
-import 'models/models.dart';
 import 'package:compute/compute.dart';
-
-import '../recently_updated_manga/recently_updated_manga.dart';
 
 /// Base lass that all manga sources extend
 abstract class MangaSourceBase with MangaInformationMixin {

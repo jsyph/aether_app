@@ -23,7 +23,7 @@ class VoidScans extends MangaStreamTemplate {
       final allUrls = document
           .querySelectorAll('div.bsx > a')
           .map((e) => e.attributes['href']!);
-      
+
       allMangaUrls.addAll(allUrls);
 
       final nextPageElement = document.querySelector('a.next.page-numbers');

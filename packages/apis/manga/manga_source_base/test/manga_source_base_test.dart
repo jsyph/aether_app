@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:alfred/alfred.dart';
-import 'package:app_logging/app_logging.dart';
 import 'package:dio/dio.dart';
 import 'package:manga_source_base/manga_source_base.dart';
 import 'package:manga_source_base/src/source_templates/manga_stream.dart';
@@ -25,7 +24,7 @@ void main() async {
             'Test getMangaInformation',
             () {
               test(
-                'Test without author',
+                'Test MangaStream',
                 () async {
                   final testClass = MangaStreamTestClass(
                     [

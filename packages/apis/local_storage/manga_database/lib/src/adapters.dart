@@ -1,4 +1,3 @@
-import 'package:app_logging/app_logging.dart';
 import 'package:hive/hive.dart';
 import 'models/models.dart';
 
