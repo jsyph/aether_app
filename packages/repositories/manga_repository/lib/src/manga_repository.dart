@@ -17,9 +17,9 @@ class MangaRepository {
       searchResults.add(
         MangaSearchResult(
           // currently it sets the first title added to record as the title returned
-          fuzzySearchResult.titles.first.title,
-          fuzzySearchResult.coverImages.map((e) => e.url).toList(),
-          fuzzySearchResult.rating.map((e) => e.rating).toList(),
+          fuzzySearchResult.titles,
+          fuzzySearchResult.coverImages,
+          fuzzySearchResult.rating,
           fuzzySearchResult.altTitles,
         ),
       );
@@ -40,13 +40,13 @@ class MangaRepository {
         contentType: MangaContentType.parse(
           searchResult.contentType.toString(),
         ),
-        coverImageUrl: searchResult.coverImages[i].url,
-        datePostedOn: searchResult.postedOn[i].postedOn,
-        description: searchResult.descriptions[i].text,
-        genres: searchResult.genres[i].genres,
-        rating: searchResult.rating[i].rating,
+        coverImageUrl: searchResult.coverImages[i],
+        datePostedOn: searchResult.postedOn[i],
+        description: searchResult.descriptions[i],
+        genres: searchResult.genres[i],
+        rating: searchResult.rating[i],
         releaseStatus: MangaReleaseStatus.parse(
-          searchResult.releaseStatus[i].status.toString(),
+          searchResult.releaseStatus[i].toString(),
         ),
         sourceName: searchResult.titles[i].sourceName,
         title: searchResult.titles[i].title,
@@ -54,11 +54,7 @@ class MangaRepository {
       );
 
       allMangaInformation.add(mangaInformation);
-
-      
     }
-
-
   }
 
   static Future<MangaRepository> initialize() async {

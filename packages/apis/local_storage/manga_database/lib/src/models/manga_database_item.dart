@@ -131,6 +131,16 @@ class MangaDatabaseItem extends HiveObject {
     );
   }
 
+  /// returns all record information as a list of MangaDatabaseItemFilterResult
+  List<MangaDatabaseItemFilterResult> toList() {
+    List<MangaDatabaseItemFilterResult> results = [];
+    for (final sourceName in sourceNames) {
+      results.add(filter(sourceName));
+    }
+
+    return results;
+  }
+
   /// adds data to current database item and returns it
   void addData({
     required String mangaSourceName,

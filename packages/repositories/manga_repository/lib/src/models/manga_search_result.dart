@@ -9,5 +9,5 @@ class MangaSearchResult {
   final List<String>? altTitles;
   final List<String> coverUrl;
   final List<double> rating;
-  final String title;
+  final List<String> title;
 }
