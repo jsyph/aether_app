@@ -6,47 +6,9 @@ part of 'manga_database_item_status.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MangaDatabaseItemReleaseStatusAdapter
-    extends TypeAdapter<MangaDatabaseItemReleaseStatus> {
-  @override
-  final int typeId = 8;
-
-  @override
-  MangaDatabaseItemReleaseStatus read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return MangaDatabaseItemReleaseStatus(
-      fields[1] as ReleaseStatus,
-      fields[0] as String,
-    );
-  }
-
-  @override
-  void write(BinaryWriter writer, MangaDatabaseItemReleaseStatus obj) {
-    writer
-      ..writeByte(2)
-      ..writeByte(1)
-      ..write(obj.status)
-      ..writeByte(0)
-      ..write(obj.sourceName);
-  }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MangaDatabaseItemReleaseStatusAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
-}
-
 class ReleaseStatusAdapter extends TypeAdapter<ReleaseStatus> {
   @override
-  final int typeId = 9;
+  final int typeId = 2;
 
   @override
   ReleaseStatus read(BinaryReader reader) {
@@ -107,31 +69,3 @@ class ReleaseStatusAdapter extends TypeAdapter<ReleaseStatus> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-MangaDatabaseItemReleaseStatus _$MangaDatabaseItemReleaseStatusFromJson(
-        Map<String, dynamic> json) =>
-    MangaDatabaseItemReleaseStatus(
-      $enumDecode(_$ReleaseStatusEnumMap, json['status']),
-      json['source_name'] as String,
-    );
-
-Map<String, dynamic> _$MangaDatabaseItemReleaseStatusToJson(
-        MangaDatabaseItemReleaseStatus instance) =>
-    <String, dynamic>{
-      'source_name': instance.sourceName,
-      'status': _$ReleaseStatusEnumMap[instance.status]!,
-    };
-
-const _$ReleaseStatusEnumMap = {
-  ReleaseStatus.onGoing: 'on_going',
-  ReleaseStatus.dropped: 'dropped',
-  ReleaseStatus.completed: 'completed',
-  ReleaseStatus.cancelled: 'cancelled',
-  ReleaseStatus.hiatus: 'hiatus',
-  ReleaseStatus.unknown: 'unknown',
-  ReleaseStatus.none: 'none',
-};

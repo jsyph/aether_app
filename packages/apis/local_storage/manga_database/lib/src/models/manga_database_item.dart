@@ -22,24 +22,13 @@ class MangaDatabaseItem extends HiveObject {
     this.postedOn,
     this.releaseStatus,
     this.altTitles,
+    this.sourceNames,
   );
 
   /// Create empty instance with a unique id
   factory MangaDatabaseItem.empty() {
-    return MangaDatabaseItem(
-      Uuid().v4().toString(),
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      MangaDatabaseItemMangaType.unknown,
-      '',
-      [],
-      [],
-      [],
-    );
+    return MangaDatabaseItem(Uuid().v4().toString(), [], [], [], [], [], [],
+        MangaDatabaseItemMangaType.unknown, '', [], [], [], []);
   }
 
   factory MangaDatabaseItem.fromJson(Map<String, dynamic> json) =>
@@ -58,13 +47,13 @@ class MangaDatabaseItem extends HiveObject {
 
   @HiveField(3)
   @JsonKey(name: 'cover_images')
-  List<MangaDatabaseItemCoverImage> coverImages;
+  List<String> coverImages;
 
   @HiveField(4)
-  List<MangaDatabaseItemDescription> descriptions;
+  List<String> descriptions;
 
   @HiveField(5)
-  List<MangaDatabaseItemGenres> genres;
+  List<List<String>> genres;
 
   // id should never change
   @HiveField(6)
@@ -72,21 +61,25 @@ class MangaDatabaseItem extends HiveObject {
 
   @HiveField(7)
   @JsonKey(name: 'posted_on')
-  List<MangaDatabaseItemPostedOn> postedOn;
+  List<DateTime> postedOn;
 
   @HiveField(8)
-  List<MangaDatabaseItemRating> rating;
+  List<double> rating;
 
   @HiveField(9)
   @JsonKey(name: 'release_status')
-  List<MangaDatabaseItemReleaseStatus> releaseStatus;
+  List<ReleaseStatus> releaseStatus;
 
   @HiveField(10)
-  // There should be no duplicates
-  List<MangaDatabaseItemTitle> titles;
+  @JsonKey(name: 'source_names')
+  List<String> sourceNames;
 
   @HiveField(11)
-  List<MangaDatabaseItemUrl> urls;
+  // There should be no duplicates
+  List<String> titles;
+
+  @HiveField(12)
+  List<String> urls;
 
   @override
   String toString() {
@@ -98,7 +91,7 @@ class MangaDatabaseItem extends HiveObject {
   List<String> get allTitles {
     List<String> results = [];
     results.addAll(
-      titles.map((e) => e.title),
+      titles,
     );
 
     if (altTitles != null) {
@@ -111,6 +104,31 @@ class MangaDatabaseItem extends HiveObject {
     results = results.toSet().toList();
 
     return results;
+  }
+
+  /// Get data from record that belongs to a source
+  MangaDatabaseItemFilterResult filter(String sourceName) {
+    final sourceIndex = sourceNames.indexOf(sourceName);
+
+    if (sourceIndex == -1) {
+      throw MangaSourceNotFoundException('$sourceName is not found');
+    }
+
+    return MangaDatabaseItemFilterResult(
+      altTitles: altTitles,
+      author: author,
+      contentType: contentType,
+      coverImage: coverImages[sourceIndex],
+      description: descriptions[sourceIndex],
+      genres: genres[sourceIndex],
+      id: id,
+      postedOn: postedOn[sourceIndex],
+      rating: rating[sourceIndex],
+      releaseStatus: releaseStatus[sourceIndex],
+      sourceName: sourceNames[sourceIndex],
+      title: titles[sourceIndex],
+      url: urls[sourceIndex],
+    );
   }
 
   /// adds data to current database item and returns it
@@ -128,29 +146,22 @@ class MangaDatabaseItem extends HiveObject {
     required DateTime mangaPostedOn,
     required ReleaseStatus mangaReleaseStatus,
   }) {
-    coverImages.add(
-      MangaDatabaseItemCoverImage(mangaCoverImage, mangaSourceName),
-    );
+    coverImages.add(mangaCoverImage);
 
     descriptions.add(
-      MangaDatabaseItemDescription(mangaDescription, mangaSourceName),
+      mangaDescription,
     );
 
     genres.add(
-      MangaDatabaseItemGenres(mangaGenres, mangaSourceName),
+      mangaGenres,
     );
 
     rating.add(
-      MangaDatabaseItemRating(mangaRating, mangaSourceName),
+      mangaRating,
     );
 
     // avoid duplicate titles
-    titles.add(
-      MangaDatabaseItemTitle(
-        mangaTitle,
-        mangaSourceName,
-      ),
-    );
+    titles.add(mangaTitle);
 
     // if altTitles and mangaAltTitles are not null,
     // then check if altTitles contains any title from mangaAltTitles,
@@ -164,7 +175,7 @@ class MangaDatabaseItem extends HiveObject {
     }
 
     urls.add(
-      MangaDatabaseItemUrl(mangaUrl, mangaSourceName),
+      mangaUrl,
     );
 
     // if manga content type is not null , then assign it
@@ -175,18 +186,14 @@ class MangaDatabaseItem extends HiveObject {
     author ??= mangaAuthor;
 
     postedOn.add(
-      MangaDatabaseItemPostedOn(
-        mangaSourceName,
-        mangaPostedOn,
-      ),
+      mangaPostedOn,
     );
 
     releaseStatus.add(
-      MangaDatabaseItemReleaseStatus(
-        mangaReleaseStatus,
-        mangaSourceName,
-      ),
+      mangaReleaseStatus,
     );
+
+    sourceNames.add(mangaSourceName);
   }
 
   Map<String, dynamic> toJson() => _$MangaDatabaseItemToJson(this);

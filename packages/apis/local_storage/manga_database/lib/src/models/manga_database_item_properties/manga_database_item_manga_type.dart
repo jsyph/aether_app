@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'manga_database_item_manga_type.g.dart';
 
-@HiveType(typeId: 5)
+@HiveType(typeId: 1)
 enum MangaDatabaseItemMangaType {
   @HiveField(0)
 @JsonValue('manhua')

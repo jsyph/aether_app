@@ -143,64 +143,36 @@ Raymond gained medical knowledge that had not existed in this world. The great l
               'author': '',
               'content_type': 'manhwa',
               'cover_images': [
-                {
-                  'source_name': 'AsuraScans',
-                  'url':
-                      'https://www.asurascans.com/wp-content/uploads/2022/11/DemonLordCover02.png',
-                },
+                'https://www.asurascans.com/wp-content/uploads/2022/11/DemonLordCover02.png',
               ],
               'descriptions': [
-                {
-                  'source_name': 'AsuraScans',
-                  'text':
-                      '''“Demon Lord.”\nThat’s…\nWhat they used to call me in my past life, before I became human.''',
-                },
+                '''“Demon Lord.”\nThat’s…\nWhat they used to call me in my past life, before I became human.''',
               ],
               'genres': [
-                {
-                  'source_name': 'AsuraScans',
-                  'genres': [
-                    'Action',
-                    'Adventure',
-                    'Demon',
-                    'Fantasy',
-                    'Martial Arts',
-                  ],
-                }
+                [
+                  'Action',
+                  'Adventure',
+                  'Demon',
+                  'Fantasy',
+                  'Martial Arts',
+                ],
               ],
               'id': '21b0b9ae-d682-40f7-bfa5-b08fc8740804',
               'posted_on': [
-                {
-                  'source_name': 'AsuraScans',
-                  'posted_on': '2022-11-18T13:10:14+00:00',
-                },
+                '2022-11-18T13:10:14+00:00',
               ],
               'rating': [
-                {
-                  'source_name': 'AsuraScans',
-                  'rating': 9.7,
-                }
+                9.7,
               ],
               'release_status': [
-                {
-                  'source_name': 'AsuraScans',
-                  'status': 'on_going',
-                }
+                'on_going',
               ],
-              'titles': [
-                {
-                  'source_name': 'AsuraScans',
-                  'title': 'Demon Lord’s Martial Arts Ascension'
-                },
-              ],
+              'titles': ['Demon Lord’s Martial Arts Ascension'],
               'alt_titles': null,
               'urls': [
-                {
-                  'source_name': 'AsuraScans',
-                  'url':
-                      'https://www.asurascans.com/manga/1672760368-demon-lords-martial-arts-ascension/',
-                }
+                'https://www.asurascans.com/manga/1672760368-demon-lords-martial-arts-ascension/',
               ],
+              'source_names': ['AsuraScans'],
             },
           ];
 
