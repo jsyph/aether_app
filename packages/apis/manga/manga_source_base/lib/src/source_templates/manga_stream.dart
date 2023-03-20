@@ -1,10 +1,70 @@
-import 'package:app_logging/app_logging.dart';
 import 'package:html/dom.dart';
+import 'package:html/parser.dart';
+import 'package:intl/intl.dart';
 
 import '../html_extension.dart';
 import '../source_base/source_base.dart';
 
 abstract class MangaStreamTemplate extends MangaSourceBase {
+  // @override
+  // Stream<MangaInformation> getRecentlyAddedManga() {
+    
+  // }
+
+
+  @override
+  Future<List<String>> getAllMangaUrls() async {
+    final response = await dioClient.get('$baseUrl');
+
+    final document = parse(response.data);
+
+    final allAElements = document.querySelectorAll('li > a.series');
+
+    final allLinks = allAElements
+        .map(
+          (e) => e.attributes['href']!,
+        )
+        .toList();
+    return allLinks;
+  }
+
+  @override
+  DateFormat get mangaChapterDateFormat => DateFormat('MMMM MM, yyyy');
+
+  @override
+  String get mangaChapterDateSelector =>
+      'div#chapterlist > ul > li > div > div > a > span.chapterdate';
+
+  @override
+  String mangaChapterExtractChapterDate(Element element) => element.text;
+
+  @override
+  String? mangaChapterExtractChapterNumber(Element element) {
+    final dataNum = element.attributes['data-num'];
+    if (dataNum == null) {
+      return null;
+    }
+
+    // check if data-num contains `-`
+    if (dataNum.contains('-')) {
+      final splitDataNum = dataNum.split(' - ');
+      return splitDataNum.first.trim();
+    }
+
+    return dataNum;
+  }
+
+  @override
+  String get mangaChapterNumberSelector => 'div#chapterlist > ul > li';
+
+  @override
+  String get mangaChapterTitleSelector =>
+      'div#chapterlist > ul > li > div > div > a > span.chapternum';
+
+  @override
+  String get mangaChapterUrlSelector =>
+      'div#chapterlist > ul > li > div > div > a';
+
   @override
   List<String>? mangaInfoExtractAltTitles(Document parsedDocument) {
     final element =
@@ -17,7 +77,7 @@ abstract class MangaStreamTemplate extends MangaSourceBase {
     if (element.querySelector('a') != null) {
       return null;
     }
-    
+
     final altTitlesText = element.text;
     return altTitlesText
         .split(',')
@@ -112,4 +172,5 @@ abstract class MangaStreamTemplate extends MangaSourceBase {
 
     return titleElement!.text;
   }
+
 }

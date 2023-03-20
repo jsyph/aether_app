@@ -30,8 +30,6 @@ environment:
 dependencies:
   app_logging:
     path: ./packages/utilities/app_logging
-  asura_scans:
-    path: ./packages/apis/manga/asura_scans
   cupertino_icons: ^1.0.2
   custom_dio:
     path: ./packages/utilities/network/custom_dio
@@ -40,9 +38,16 @@ dependencies:
     sdk: flutter
   flutter_inappwebview: ^5.7.2+3
   hive: ^2.2.3
+  hive_flutter: ^1.1.0
   html: ^0.15.1
+  manga_database:
+    path: ./packages/apis/local_storage/manga_database
+  manga_repository:
+    path: ./packages/repositories/manga_repository
   manga_source_base:
     path: ./packages/apis/manga/manga_source_base
+  manga_sources:
+    path: ./packages/apis/manga/manga_sources
   meta: null
 
 dev_dependencies:

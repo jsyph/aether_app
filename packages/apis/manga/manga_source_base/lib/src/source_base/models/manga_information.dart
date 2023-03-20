@@ -13,6 +13,7 @@ class MangaInformation {
     required this.contentType,
     required this.author,
     required this.datePostedOn,
+    required this.url,
   });
 
   final List<String>? altTitles;
@@ -25,6 +26,7 @@ class MangaInformation {
   final double rating;
   final MangaReleaseStatus releaseStatus;
   final String title;
+  final String url;
 
   @override
   String toString() {

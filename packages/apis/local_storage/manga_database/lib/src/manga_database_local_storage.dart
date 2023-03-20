@@ -1,5 +1,6 @@
 import 'package:app_logging/app_logging.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:woozy_search/woozy_search.dart';
 
 import 'manga_database_error.dart';
@@ -70,7 +71,7 @@ class LocalMangaDatabase {
     required MangaDatabaseItemMangaType? contentType,
     required String? author,
     required DateTime datePostedOn,
-    required ReleaseStatus releaseStatus,
+    required MangaDatabaseReleaseStatus releaseStatus,
   }) async {
     List<String> allTitles = [title];
 
@@ -260,6 +261,21 @@ class LocalMangaDatabase {
 
       await _database.put(key, parsedManga);
     }
+  }
+
+  /// Register Adapters
+  static void registerHiveAdapters() {
+    Hive.registerAdapter<MangaDatabaseItemMangaType>(
+      MangaDatabaseItemMangaTypeAdapter(),
+    );
+
+    Hive.registerAdapter<MangaDatabaseReleaseStatus>(
+      ReleaseStatusAdapter(),
+    );
+
+    Hive.registerAdapter<MangaDatabaseItem>(
+      MangaDatabaseItemAdapter(),
+    );
   }
 
   LazyBox<MangaDatabaseItem> get _database => _nullableLazyDatabase!;

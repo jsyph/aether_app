@@ -15,29 +15,23 @@ class AllMangaSources {
 
   static MangaSourceBase getSourceFromString(String sourceName) {
     for (final source in allSources) {
-      if (source.runtimeType.toString() == sourceName) {
+      if (source.runtimeType.toString().toLowerCase() == sourceName.toLowerCase()) {
         return source;
       }
     }
-    throw SourceNotFoundError('The source $sourceName is not found');
+    throw Exception('The source $sourceName is not found, it is probably not implemented');
   }
 
-  static Stream<MangaInfo> getAllManga() async* {
+  static Stream<MangaData> getAllManga() async* {
     for (final source in allSources) {
       final mangaInfoStream = source.getAllManga();
       // https://stackoverflow.com/a/56037674/14928208
       await for (final mangaInfo in mangaInfoStream) {
-        yield MangaInfo(
+        yield MangaData(
           source.runtimeType.toString(),
           mangaInfo,
         );
       }
     }
   }
-}
-
-class SourceNotFoundError implements Exception {
-  SourceNotFoundError(this.message);
-
-  final String message;
 }

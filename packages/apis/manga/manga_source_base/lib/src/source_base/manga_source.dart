@@ -1,21 +1,67 @@
 import 'dart:async';
 
 import 'package:app_logging/app_logging.dart';
-import 'package:dio/dio.dart';
-import 'package:html/parser.dart';
-import 'package:manga_source_base/manga_source_base.dart';
-import 'manga_information_mixin.dart';
 import 'package:compute/compute.dart';
+import 'package:dio/dio.dart';
+import 'package:html/dom.dart';
+import 'package:html/parser.dart';
+import '../../manga_source_base.dart';
+import 'manga_chapter_methods.dart.dart';
+
+import 'manga_information_methods.dart';
 
 /// Base lass that all manga sources extend
-abstract class MangaSourceBase with MangaInformationMixin {
+abstract class MangaSourceBase
+    with MangaInformationAbstractMethods, MangaChapterAbstractMethods {
   final _logger = AppLogger();
+
+  Future<List<MangaChapter>> getChapters(String mangaUrl) async {
+    final response = await dioClient.get(mangaUrl);
+    final document = parse(response.data);
+
+    final allUrlsElements = document.querySelectorAll(mangaChapterUrlSelector);
+
+    final allTitlesElements =
+        document.querySelectorAll(mangaChapterTitleSelector);
+
+    final allChapterDateElements =
+        document.querySelectorAll(mangaChapterDateSelector);
+
+    final allChapterNumbers =
+        document.querySelectorAll(mangaChapterNumberSelector);
+
+    List<MangaChapter> chapters = [];
+
+    for (int i = 0; i < allUrlsElements.length; i++) {
+      final unProcessedChapterNumber =
+          mangaChapterExtractChapterNumber(allChapterNumbers[i]);
+
+      late final double? parsedDouble;
+      if (unProcessedChapterNumber == null) {
+        parsedDouble = null;
+      } else {
+        parsedDouble = double.tryParse(unProcessedChapterNumber);
+      }
+
+      chapters.add(
+        MangaChapter(
+          allTitlesElements[i].text,
+          allUrlsElements[i].attributes['href']!,
+          mangaChapterDateFormat.parse(
+            mangaChapterExtractChapterDate(allChapterDateElements[i]),
+          ),
+          parsedDouble,
+        ),
+      );
+    }
+
+    return chapters;
+  }
+
+  Dio get dioClient;
 
   /// Checks if class supports recently updated manga
   bool get supportsRecentlyUpdatedManga => this is RecentlyUpdatedManga;
-
-  /// Gets all manga urls from source
-  Future<List<String>> getAllMangaUrls();
 
   // Returns stream of MangaInformation as they are loaded
   Stream<MangaInformation> getAllManga() async* {
@@ -33,8 +79,11 @@ abstract class MangaSourceBase with MangaInformationMixin {
       _logger.v('finished parsing document');
 
       final parsedResult = await compute(
-        (document) => extractMangaInformation(document),
-        parsedDocument,
+        (args) => _processMangaInformation(
+          args.first as Document,
+          args.last as String,
+        ),
+        {parsedDocument, url},
       );
 
       _logger.v(parsedResult);
@@ -45,5 +94,87 @@ abstract class MangaSourceBase with MangaInformationMixin {
     }
   }
 
-  Dio get dioClient;
+  String get baseUrl;
+
+  /// Gets all manga urls from source
+  Future<List<String>> getAllMangaUrls();
+
+  Stream<MangaInformation> getRecentlyAddedManga();
+
+  MangaInformation _processMangaInformation(
+      Document parsedDocument, String url) {
+    // ─────────────────────────────────────────────────────────────
+
+    // title element should not be null
+    final title = mangaInfoExtractTitle(parsedDocument).trim();
+
+    // ─────────────────────────────────────────────────────────────
+
+    List<String>? unTrimmedAltTitles =
+        mangaInfoExtractAltTitles(parsedDocument);
+
+    late final List<String>? altTitles;
+    if (unTrimmedAltTitles != null) {
+      altTitles = unTrimmedAltTitles.map((e) => e.trim()).toList();
+    } else {
+      altTitles = null;
+    }
+
+    // ─────────────────────────────────────────────────────────────
+
+    final rating = mangaInfoExtractRating(parsedDocument);
+
+    // ─────────────────────────────────────────────────────────────
+
+    final status = mangaInfoExtractStatus(parsedDocument);
+
+    // ─────────────────────────────────────────────────────────────
+
+    final genres = mangaInfoExtractGenres(parsedDocument)
+        .map(
+          (e) => e.trim(),
+        )
+        .toList();
+
+    // ─────────────────────────────────────────────────────────────
+
+    final description = mangaInfoExtractDescription(parsedDocument).trim();
+
+    // ─────────────────────────────────────────────────────────────
+
+    final coverImageUrl = mangaInfoExtractCoverImageUrl(parsedDocument);
+
+    // ─────────────────────────────────────────────────────────────
+
+    final unTrimmedAuthor = mangaInfoExtractAuthor(parsedDocument);
+    late final String? author;
+    if (unTrimmedAuthor != null) {
+      author = unTrimmedAuthor.trim();
+    } else {
+      author = null;
+    }
+    // ─────────────────────────────────────────────────────────────
+
+    final dateReleasedOn = mangaInfoExtractDateReleasedOn(parsedDocument);
+
+    // ─────────────────────────────────────────────────────────────
+
+    final contentType = mangaInfoExtractContentType(parsedDocument);
+
+    // ─────────────────────────────────────────────────────────────
+
+    return MangaInformation(
+      title: title,
+      altTitles: altTitles,
+      description: description,
+      genres: genres,
+      rating: rating,
+      coverImageUrl: coverImageUrl,
+      releaseStatus: status,
+      contentType: contentType,
+      author: author,
+      datePostedOn: dateReleasedOn,
+      url: url,
+    );
+  }
 }

@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'manga_database_item_status.g.dart';
 
 @HiveType(typeId: 2)
-enum ReleaseStatus {
+enum MangaDatabaseReleaseStatus {
   @HiveField(0)
   @JsonValue('on_going')
   onGoing,
@@ -33,21 +33,21 @@ enum ReleaseStatus {
   @JsonValue('none')
   none;
 
-  factory ReleaseStatus.parse(String rawString) {
+  factory MangaDatabaseReleaseStatus.parse(String rawString) {
     switch (rawString.toLowerCase()) {
       case 'ongoing':
-        return ReleaseStatus.onGoing;
+        return MangaDatabaseReleaseStatus.onGoing;
 
       case 'dropped':
-        return ReleaseStatus.dropped;
+        return MangaDatabaseReleaseStatus.dropped;
       case 'completed':
-        return ReleaseStatus.completed;
+        return MangaDatabaseReleaseStatus.completed;
       case 'cancelled':
-        return ReleaseStatus.cancelled;
+        return MangaDatabaseReleaseStatus.cancelled;
       case 'hiatus':
-        return ReleaseStatus.hiatus;
+        return MangaDatabaseReleaseStatus.hiatus;
       default:
-        return ReleaseStatus.unknown;
+        return MangaDatabaseReleaseStatus.unknown;
     }
   }
 }

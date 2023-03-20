@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 
 void main() async {
   initHive();
-  registerHiveAdapters();
+  LocalMangaDatabase.registerHiveAdapters();
   final mangaDb = await LocalMangaDatabase.initialize();
 
   final newMangaRecord = await mangaDb.addManga(
@@ -26,7 +26,7 @@ void main() async {
     contentType: MangaDatabaseItemMangaType.manhwa,
     author: '추공 (Chugong)',
     datePostedOn: DateTime.parse('2021-03-03T14:36:02+00:00'),
-    releaseStatus: ReleaseStatus.onGoing,
+    releaseStatus: MangaDatabaseReleaseStatus.onGoing,
     altTitles: ['Na Honjaman Lebel-eob', 'Only I Level Up'],
   );
 
@@ -91,7 +91,7 @@ void main() async {
             contentType: MangaDatabaseItemMangaType.manhwa,
             author: '추공 (Chugong)',
             datePostedOn: DateTime.parse('2021-03-03T14:36:02+00:00'),
-            releaseStatus: ReleaseStatus.onGoing,
+            releaseStatus: MangaDatabaseReleaseStatus.onGoing,
             altTitles: ['Na Honjaman Lebel-eob', 'Only I Level Up'],
           );
 
@@ -122,7 +122,7 @@ Raymond gained medical knowledge that had not existed in this world. The great l
             contentType: MangaDatabaseItemMangaType.manhwa,
             author: 'Yooin',
             datePostedOn: DateTime.parse('2022-12-02T13:38:13+00:00'),
-            releaseStatus: ReleaseStatus.onGoing,
+            releaseStatus: MangaDatabaseReleaseStatus.onGoing,
             altTitles: null,
           );
 

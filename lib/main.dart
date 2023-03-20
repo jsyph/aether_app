@@ -1,10 +1,13 @@
-import 'package:asura_scans/asura_scans.dart';
-import 'package:dio/dio.dart';
+import 'package:app_logging/app_logging.dart';
 import 'package:flutter/material.dart';
-import 'package:custom_dio/custom_dio.dart';
-import 'package:manga_source_base/manga_source_base.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:manga_database/manga_database.dart';
+import 'package:manga_repository/manga_repository.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  LocalMangaDatabase.registerHiveAdapters();
+  await Hive.deleteBoxFromDisk('manga_database');
   runApp(const MyApp());
 }
 
@@ -69,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: StreamBuilder(
+        child: FutureBuilder(
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Text(
@@ -79,10 +82,91 @@ class _MyHomePageState extends State<MyHomePage> {
             }
             return const CircularProgressIndicator();
           },
-          stream: AsuraScans().getAllManga(),
+          future: createTestRecord(),
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+Future<dynamic> createTestRecord() async {
+  final mangaDb = await LocalMangaDatabase.initialize();
+  final mangaRepo = await MangaRepository.initialize();
+  // create test entries
+  final newRecord = await mangaDb.addManga(
+    sourceName: 'VoidScans',
+    title: 'Lookism',
+    description:
+        '''Daniel is an unattractive loner who wakes up in a different body. Now tall, handsome, and cooler than ever in his new form, 
+        Daniel aims to achieve everything he couldn’t before. How far will he go to keep his body… and his secrets?
+
+[metaslider id=”33262″]
+''',
+    genres: [
+      'Action ',
+      'Comedy',
+      'Drama',
+      'School',
+      'Life',
+      'Shounen',
+      'Supernatural'
+    ],
+    rating: 10,
+    url: 'https://void-scans.com/manga/lookism/',
+    coverImageUrl:
+        'https://void-scans.com/wp-content/uploads/2022/05/k372635749_1.jpg',
+    contentType: MangaDatabaseItemMangaType.manhwa,
+    author: 'Park Tae Jun',
+    datePostedOn: DateTime.parse('2022-05-31T07:18:45+05:30'),
+    releaseStatus: ReleaseStatus.onGoing,
+    altTitles: [
+      'Apari3ncias,' 'Görünüşçülük, ' 'Дискриминация по внешности, ' 'Лукизм, ',
+      '外見至上主義,' '外貌至上主義, ',
+      '看脸时代, ',
+      '看臉時代,',
+      '외모지상주의',
+    ],
+  );
+
+  await mangaDb.addManga(
+    sourceName: 'CosmicScans',
+    title: 'Lookism',
+    description:
+        '''Daniel is an unattractive loner who wakes up in a different body. Now tall, handsome, and cooler than ever in his new form, 
+        Daniel aims to achieve everything he couldn’t before. How far will he go to keep his body… and his secrets?
+
+[metaslider id=”33262″]
+''',
+    genres: [
+      'Action ',
+      'Comedy',
+      'Drama',
+      'School',
+      'Life',
+      'Shounen',
+      'Supernatural'
+    ],
+    rating: 10,
+    url: 'https://cosmicscans.com/manga/lookism/',
+    coverImageUrl:
+        'https://i1.wp.com/cosmicscans.com/wp-content/uploads/2022/11/lookismCUnetnoiseLevel3.png',
+    contentType: MangaDatabaseItemMangaType.manhwa,
+    author: 'Park Tae Jun',
+    datePostedOn: DateTime.parse('2022-05-31T07:18:45+05:30'),
+    releaseStatus: ReleaseStatus.onGoing,
+    altTitles: [
+      'Apari3ncias,' 'Görünüşçülük, ' 'Дискриминация по внешности, ' 'Лукизм, ',
+      '外見至上主義,' '外貌至上主義, ',
+      '看脸时代, ',
+      '看臉時代,',
+      '외모지상주의',
+    ],
+  );
+
+  final mangaInformationPage =
+      await mangaRepo.getMangaInformationPage(newRecord.id);
+
+  AppLogger().d(mangaInformationPage);
+  return mangaInformationPage;
 }

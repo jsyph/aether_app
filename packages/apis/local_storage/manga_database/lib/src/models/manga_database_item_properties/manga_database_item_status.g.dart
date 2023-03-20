@@ -6,54 +6,54 @@ part of 'manga_database_item_status.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ReleaseStatusAdapter extends TypeAdapter<ReleaseStatus> {
+class ReleaseStatusAdapter extends TypeAdapter<MangaDatabaseReleaseStatus> {
   @override
   final int typeId = 2;
 
   @override
-  ReleaseStatus read(BinaryReader reader) {
+  MangaDatabaseReleaseStatus read(BinaryReader reader) {
     switch (reader.readByte()) {
       case 0:
-        return ReleaseStatus.onGoing;
+        return MangaDatabaseReleaseStatus.onGoing;
       case 1:
-        return ReleaseStatus.dropped;
+        return MangaDatabaseReleaseStatus.dropped;
       case 2:
-        return ReleaseStatus.completed;
+        return MangaDatabaseReleaseStatus.completed;
       case 3:
-        return ReleaseStatus.cancelled;
+        return MangaDatabaseReleaseStatus.cancelled;
       case 4:
-        return ReleaseStatus.hiatus;
+        return MangaDatabaseReleaseStatus.hiatus;
       case 5:
-        return ReleaseStatus.unknown;
+        return MangaDatabaseReleaseStatus.unknown;
       case 6:
-        return ReleaseStatus.none;
+        return MangaDatabaseReleaseStatus.none;
       default:
-        return ReleaseStatus.onGoing;
+        return MangaDatabaseReleaseStatus.onGoing;
     }
   }
 
   @override
-  void write(BinaryWriter writer, ReleaseStatus obj) {
+  void write(BinaryWriter writer, MangaDatabaseReleaseStatus obj) {
     switch (obj) {
-      case ReleaseStatus.onGoing:
+      case MangaDatabaseReleaseStatus.onGoing:
         writer.writeByte(0);
         break;
-      case ReleaseStatus.dropped:
+      case MangaDatabaseReleaseStatus.dropped:
         writer.writeByte(1);
         break;
-      case ReleaseStatus.completed:
+      case MangaDatabaseReleaseStatus.completed:
         writer.writeByte(2);
         break;
-      case ReleaseStatus.cancelled:
+      case MangaDatabaseReleaseStatus.cancelled:
         writer.writeByte(3);
         break;
-      case ReleaseStatus.hiatus:
+      case MangaDatabaseReleaseStatus.hiatus:
         writer.writeByte(4);
         break;
-      case ReleaseStatus.unknown:
+      case MangaDatabaseReleaseStatus.unknown:
         writer.writeByte(5);
         break;
-      case ReleaseStatus.none:
+      case MangaDatabaseReleaseStatus.none:
         writer.writeByte(6);
         break;
     }

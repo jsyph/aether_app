@@ -20,7 +20,7 @@ class MangaInformation {
   final String? author;
   final MangaContentType? contentType;
   final String coverImageUrl;
-  final DateTime datePostedOn;
+  final DateTime? datePostedOn;
   final String description;
   final List<String> genres;
   final double rating;
@@ -28,4 +28,24 @@ class MangaInformation {
   final String sourceName;
   final String title;
   final String url;
+
+  @override
+  String toString() {
+    return '''
+MangaInformation(
+  altTitles: $altTitles,
+  author: $author,
+  contentType: $contentType,
+  coverImageUrl: $coverImageUrl,
+  datePostedOn: $datePostedOn,
+  description: $description,
+  genres: $genres,
+  rating: $rating,
+  releaseStatus: $releaseStatus,
+  sourceName: $sourceName,
+  title: $title,
+  url: $url,
+),
+''';
+  }
 }

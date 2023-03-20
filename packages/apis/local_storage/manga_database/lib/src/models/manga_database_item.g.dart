@@ -29,7 +29,7 @@ class MangaDatabaseItemAdapter extends TypeAdapter<MangaDatabaseItem> {
       fields[2] as MangaDatabaseItemMangaType?,
       fields[1] as String?,
       (fields[7] as List).cast<DateTime>(),
-      (fields[9] as List).cast<ReleaseStatus>(),
+      (fields[9] as List).cast<MangaDatabaseReleaseStatus>(),
       (fields[0] as List?)?.cast<String>(),
       (fields[10] as List).cast<String>(),
     );
@@ -155,11 +155,11 @@ const _$MangaDatabaseItemMangaTypeEnumMap = {
 };
 
 const _$ReleaseStatusEnumMap = {
-  ReleaseStatus.onGoing: 'on_going',
-  ReleaseStatus.dropped: 'dropped',
-  ReleaseStatus.completed: 'completed',
-  ReleaseStatus.cancelled: 'cancelled',
-  ReleaseStatus.hiatus: 'hiatus',
-  ReleaseStatus.unknown: 'unknown',
-  ReleaseStatus.none: 'none',
+  MangaDatabaseReleaseStatus.onGoing: 'on_going',
+  MangaDatabaseReleaseStatus.dropped: 'dropped',
+  MangaDatabaseReleaseStatus.completed: 'completed',
+  MangaDatabaseReleaseStatus.cancelled: 'cancelled',
+  MangaDatabaseReleaseStatus.hiatus: 'hiatus',
+  MangaDatabaseReleaseStatus.unknown: 'unknown',
+  MangaDatabaseReleaseStatus.none: 'none',
 };

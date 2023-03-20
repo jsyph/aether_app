@@ -7,11 +7,16 @@ environment:
   sdk: '>=2.19.4 <3.0.0'
 
 dependencies:
+  app_logging:
+    path: ../../utilities/app_logging
   manga_database:
     path: ../../apis/local_storage/manga_database
   manga_sources:
     path: ../../apis/manga/manga_sources
+  matrix2d: ^1.0.4
 
 dev_dependencies:
+  alfred: ^1.1.0+1
+  hive: ^2.2.3
   lints: ^2.0.0
   test: ^1.21.0

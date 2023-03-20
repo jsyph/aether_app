@@ -68,7 +68,7 @@ class MangaDatabaseItem extends HiveObject {
 
   @HiveField(9)
   @JsonKey(name: 'release_status')
-  List<ReleaseStatus> releaseStatus;
+  List<MangaDatabaseReleaseStatus> releaseStatus;
 
   @HiveField(10)
   @JsonKey(name: 'source_names')
@@ -154,7 +154,7 @@ class MangaDatabaseItem extends HiveObject {
     required MangaDatabaseItemMangaType? mangaContentType,
     required String? mangaAuthor,
     required DateTime mangaPostedOn,
-    required ReleaseStatus mangaReleaseStatus,
+    required MangaDatabaseReleaseStatus mangaReleaseStatus,
   }) {
     coverImages.add(mangaCoverImage);
 

@@ -1,11 +1,13 @@
 class MangaChapter {
   MangaChapter(
-    this.number,
     this.title,
+    this.url,
     this.timeReleased,
+    this.number,
   );
 
-  final double number;
+  final double? number;
   final DateTime timeReleased;
-  final String? title;
+  final String title;
+  final String url;
 }

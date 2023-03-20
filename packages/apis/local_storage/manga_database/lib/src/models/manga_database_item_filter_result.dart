@@ -29,7 +29,7 @@ class MangaDatabaseItemFilterResult {
 
   final DateTime postedOn;
   final double rating;
-  final ReleaseStatus releaseStatus;
+  final MangaDatabaseReleaseStatus releaseStatus;
   final String sourceName;
   final String title;
   final String url;

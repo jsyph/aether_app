@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:alfred/alfred.dart';
 import 'package:dio/dio.dart';
+import 'package:html/dom.dart';
+import 'package:intl/src/intl/date_format.dart';
 import 'package:manga_source_base/manga_source_base.dart';
 import 'package:manga_source_base/src/source_templates/manga_stream.dart';
 import 'package:test/test.dart';
@@ -216,4 +218,35 @@ class MangaStreamTestClass extends MangaStreamTemplate {
   Future<List<String>> getAllMangaUrls() {
     return Future.value(testUrls);
   }
+
+  @override
+  // TODO: implement mangaChapterDateFormat
+  DateFormat get mangaChapterDateFormat => throw UnimplementedError();
+
+  @override
+  // TODO: implement mangaChapterDateSelector
+  String get mangaChapterDateSelector => throw UnimplementedError();
+
+
+  @override
+  // TODO: implement mangaChapterTitleSelector
+  String get mangaChapterTitleSelector => throw UnimplementedError();
+
+  @override
+  // TODO: implement mangaChapterUrlSelector
+  String get mangaChapterUrlSelector => throw UnimplementedError();
+
+  @override
+  String? mangaChapterExtractChapterNumber(Element element) {
+    // TODO: implement mangaChapterExtractChapterNumber
+    throw UnimplementedError();
+  }
+
+  @override
+  // TODO: implement mangaChapterNumberSelector
+  String get mangaChapterNumberSelector => throw UnimplementedError();
+  
+  @override
+  // TODO: implement mangaListModeUrl
+  String get mangaListModeUrl => throw UnimplementedError();
 }
