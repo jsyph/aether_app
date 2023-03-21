@@ -1,3 +1,4 @@
+import 'package:app_logging/app_logging.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
@@ -6,15 +7,10 @@ import '../html_extension.dart';
 import '../source_base/source_base.dart';
 
 abstract class MangaStreamTemplate extends MangaSourceBase {
-  // @override
-  // Stream<MangaInformation> getRecentlyAddedManga() {
-    
-  // }
-
-
   @override
   Future<List<String>> getAllMangaUrls() async {
-    final response = await dioClient.get('$baseUrl');
+    final response =
+        await dioClient.getUri(baseUri.resolve('/manga/list-mode/'));
 
     final document = parse(response.data);
 
@@ -26,6 +22,43 @@ abstract class MangaStreamTemplate extends MangaSourceBase {
         )
         .toList();
     return allLinks;
+  }
+
+  @override
+  Stream<MangaInformation> getRecentlyAddedManga() async* {
+    int pageCount = 1;
+    while (true) {
+      final response = await dioClient.getUri(
+        baseUri.resolve(
+          '/manga/?status=&type=&order=latest&page=$pageCount',
+        ),
+      );
+
+      final parsedDocument = parse(response.data);
+
+      final allUrlElements = parsedDocument.querySelectorAll('div.bsx > a');
+
+      final allUrls = allUrlElements.map((e) => e.attributes['href']!);
+
+      for (final url in allUrls) {
+        AppLogger().d('getting info on $url');
+        final urlResponse = await dioClient.get(url);
+
+        final urlParsedDocuments = parse(urlResponse.data);
+
+        yield processMangaInformation(urlParsedDocuments, url);
+      }
+
+      // check if has next button
+      final nextButton = parsedDocument.querySelector('div.hpage > a.r');
+
+      // the next button is not found
+      if (nextButton == null) {
+        break;
+      }
+
+      pageCount++;
+    }
   }
 
   @override
@@ -172,5 +205,4 @@ abstract class MangaStreamTemplate extends MangaSourceBase {
 
     return titleElement!.text;
   }
-
 }

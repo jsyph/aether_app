@@ -19,16 +19,33 @@ class MangaRepository {
       final mangaInformation = MangaInformation(
         altTitles: mangaData.info.altTitles,
         author: mangaData.info.author,
-        contentType: MangaContentType.parse(mangaData.info.contentType.toString()),
+        contentType:
+            MangaContentType.parse(mangaData.info.contentType.toString()),
         coverImageUrl: mangaData.info.coverImageUrl,
         datePostedOn: mangaData.info.datePostedOn,
         description: mangaData.info.description,
         genres: mangaData.info.genres,
         rating: mangaData.info.rating,
-        releaseStatus: MangaReleaseStatus.parse(mangaData.info.releaseStatus.toString()),
+        releaseStatus:
+            MangaReleaseStatus.parse(mangaData.info.releaseStatus.toString()),
         sourceName: mangaData.sourceName,
         title: mangaData.info.title,
         url: mangaData.info.url,
+      );
+
+      _mangaDb.addManga(
+        sourceName: mangaInformation.sourceName,
+        title: mangaInformation.title,
+        altTitles: mangaInformation.altTitles,
+        description: mangaInformation.description,
+        genres: mangaInformation.genres,
+        rating: mangaInformation.rating,
+        url: mangaInformation.url,
+        coverImageUrl: mangaInformation.coverImageUrl,
+        contentType: mangaInformation.contentType.toString(),
+        author: mangaInformation.author,
+        datePostedOn: mangaInformation.datePostedOn,
+        releaseStatus: mangaInformation.releaseStatus.toString(),
       );
     }
   }

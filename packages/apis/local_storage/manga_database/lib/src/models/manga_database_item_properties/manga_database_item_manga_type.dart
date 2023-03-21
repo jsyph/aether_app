@@ -6,7 +6,7 @@ part 'manga_database_item_manga_type.g.dart';
 @HiveType(typeId: 1)
 enum MangaDatabaseItemMangaType {
   @HiveField(0)
-@JsonValue('manhua')
+  @JsonValue('manhua')
   manhua,
   @HiveField(1)
   @JsonValue('manhwa')
@@ -16,8 +16,19 @@ enum MangaDatabaseItemMangaType {
   manga,
   @HiveField(3)
   @JsonValue('unknown')
-  unknown,
-  @HiveField(4)
-  @JsonValue('none')
-  none;
+  unknown;
+
+  factory MangaDatabaseItemMangaType.parse(String rawString) {
+    switch (rawString.toLowerCase()) {
+      case 'manhua':
+        return MangaDatabaseItemMangaType.manhua;
+      case 'manhwa':
+        return MangaDatabaseItemMangaType.manhwa;
+      case 'manga':
+        return MangaDatabaseItemMangaType.manga;
+
+      default:
+        return MangaDatabaseItemMangaType.unknown;
+    }
+  }
 }

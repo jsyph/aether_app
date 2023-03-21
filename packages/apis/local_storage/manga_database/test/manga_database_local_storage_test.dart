@@ -23,10 +23,10 @@ void main() async {
     url: 'https://www.asurascans.com/manga/1672760368-solo-leveling/',
     coverImageUrl:
         'https://www.asurascans.com/wp-content/uploads/2021/03/soloLevelingCover02.png',
-    contentType: MangaDatabaseItemMangaType.manhwa,
+    contentType: 'manhwa',
     author: '추공 (Chugong)',
     datePostedOn: DateTime.parse('2021-03-03T14:36:02+00:00'),
-    releaseStatus: MangaDatabaseReleaseStatus.onGoing,
+    releaseStatus: 'onGoing',
     altTitles: ['Na Honjaman Lebel-eob', 'Only I Level Up'],
   );
 
@@ -88,10 +88,10 @@ void main() async {
             url: 'https://flamescans.org/series/1678014121-solo-leveling/',
             coverImageUrl:
                 'https://flamescans.org/wp-content/uploads/2021/01/image.png',
-            contentType: MangaDatabaseItemMangaType.manhwa,
+            contentType: 'manhwa',
             author: '추공 (Chugong)',
             datePostedOn: DateTime.parse('2021-03-03T14:36:02+00:00'),
-            releaseStatus: MangaDatabaseReleaseStatus.onGoing,
+            releaseStatus: 'onGoing',
             altTitles: ['Na Honjaman Lebel-eob', 'Only I Level Up'],
           );
 
@@ -119,10 +119,10 @@ Raymond gained medical knowledge that had not existed in this world. The great l
             url: 'https://www.asurascans.com/manga/1672760368-dr-player/',
             coverImageUrl:
                 'https://www.asurascans.com/wp-content/uploads/2022/12/drPlayerCover02.png',
-            contentType: MangaDatabaseItemMangaType.manhwa,
+            contentType: 'manhwa',
             author: 'Yooin',
             datePostedOn: DateTime.parse('2022-12-02T13:38:13+00:00'),
-            releaseStatus: MangaDatabaseReleaseStatus.onGoing,
+            releaseStatus: 'onGoing',
             altTitles: null,
           );
 

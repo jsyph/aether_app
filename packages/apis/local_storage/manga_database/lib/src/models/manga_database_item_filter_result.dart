@@ -27,7 +27,7 @@ class MangaDatabaseItemFilterResult {
   // id should never change
   final String id;
 
-  final DateTime postedOn;
+  final DateTime? postedOn;
   final double rating;
   final MangaDatabaseReleaseStatus releaseStatus;
   final String sourceName;

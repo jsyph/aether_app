@@ -4,10 +4,10 @@ import 'package:manga_source_base/manga_source_base.dart';
 
 class CosmicScans extends MangaStreamTemplate {
   @override
+  Uri get baseUri => Uri.parse('https://cosmicscans.com');
+
+  @override
   Dio get dioClient => Dio().withRateLimit(
         Duration(seconds: 5),
       );
-
-  @override
-  String get mangaListModeUrl => 'https://cosmicscans.com/manga/list-mode/';
 }

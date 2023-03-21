@@ -61,7 +61,7 @@ class MangaDatabaseItem extends HiveObject {
 
   @HiveField(7)
   @JsonKey(name: 'posted_on')
-  List<DateTime> postedOn;
+  List<DateTime?> postedOn;
 
   @HiveField(8)
   List<double> rating;
@@ -153,7 +153,7 @@ class MangaDatabaseItem extends HiveObject {
     required String mangaUrl,
     required MangaDatabaseItemMangaType? mangaContentType,
     required String? mangaAuthor,
-    required DateTime mangaPostedOn,
+    required DateTime? mangaPostedOn,
     required MangaDatabaseReleaseStatus mangaReleaseStatus,
   }) {
     coverImages.add(mangaCoverImage);

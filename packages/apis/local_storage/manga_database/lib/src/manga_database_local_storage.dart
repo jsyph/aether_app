@@ -1,6 +1,5 @@
 import 'package:app_logging/app_logging.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:woozy_search/woozy_search.dart';
 
 import 'manga_database_error.dart';
@@ -68,10 +67,10 @@ class LocalMangaDatabase {
     required double rating,
     required String url,
     required String coverImageUrl,
-    required MangaDatabaseItemMangaType? contentType,
+    required String? contentType,
     required String? author,
-    required DateTime datePostedOn,
-    required MangaDatabaseReleaseStatus releaseStatus,
+    required DateTime? datePostedOn,
+    required String releaseStatus,
   }) async {
     List<String> allTitles = [title];
 
@@ -99,10 +98,12 @@ class LocalMangaDatabase {
           mangaRating: rating,
           mangaTitle: title,
           mangaUrl: url,
-          mangaContentType: contentType,
+          mangaContentType: contentType == null
+              ? null
+              : MangaDatabaseItemMangaType.parse(contentType),
           mangaAuthor: author,
           mangaPostedOn: datePostedOn,
-          mangaReleaseStatus: releaseStatus,
+          mangaReleaseStatus: MangaDatabaseReleaseStatus.parse(releaseStatus),
           mangaAltTitles: altTitles,
         );
 
@@ -137,10 +138,12 @@ class LocalMangaDatabase {
         mangaRating: rating,
         mangaTitle: title,
         mangaUrl: url,
-        mangaContentType: contentType,
+        mangaContentType: contentType == null
+            ? null
+            : MangaDatabaseItemMangaType.parse(contentType),
         mangaAuthor: author,
         mangaPostedOn: datePostedOn,
-        mangaReleaseStatus: releaseStatus,
+        mangaReleaseStatus: MangaDatabaseReleaseStatus.parse(releaseStatus),
         mangaAltTitles: altTitles,
       );
 
@@ -270,7 +273,7 @@ class LocalMangaDatabase {
     );
 
     Hive.registerAdapter<MangaDatabaseReleaseStatus>(
-      ReleaseStatusAdapter(),
+      MangaDatabaseReleaseStatusAdapter(),
     );
 
     Hive.registerAdapter<MangaDatabaseItem>(

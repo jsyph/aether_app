@@ -1,9 +1,8 @@
 import 'dart:io';
 
 import 'package:alfred/alfred.dart';
+import 'package:app_logging/app_logging.dart';
 import 'package:dio/dio.dart';
-import 'package:html/dom.dart';
-import 'package:intl/src/intl/date_format.dart';
 import 'package:manga_source_base/manga_source_base.dart';
 import 'package:manga_source_base/src/source_templates/manga_stream.dart';
 import 'package:test/test.dart';
@@ -13,6 +12,17 @@ void main() async {
 
   /// Note the wildcard (*) this is very important!!
   app.get('/*', (req, res) => Directory('./test/test_manga_template/'));
+
+  app.get(
+    '/manga',
+    (req, res) async {
+      final pageNumber = req.uri.queryParameters['page'];
+      AppLogger().d('Alfred: Page number is $pageNumber');
+      res.headers.contentType = ContentType.html;
+      return File(
+          './test/test_manga_template/manga_stream/recently_added_manga/test_site_$pageNumber.html');
+    },
+  );
 
   await app.listen();
 
@@ -200,6 +210,31 @@ void main() async {
               );
             },
           );
+
+          test(
+            'Test Get recently updated manga',
+            () async {
+              final testClass = MangaStreamTestClass([]);
+
+              final recentlyAddedMangaStream =
+                  testClass.getRecentlyAddedManga();
+
+              int count = 0;
+              List<MangaInformation> outputList = [];
+
+              await for (final recentlyAddedManga in recentlyAddedMangaStream) {
+                outputList.add(recentlyAddedManga);
+
+                // waits for the 2 item
+                if (count == 1) {
+                  expect(outputList.length, equals(2));
+
+                  break;
+                }
+                count++;
+              }
+            },
+          );
         },
       );
     },
@@ -212,41 +247,13 @@ class MangaStreamTestClass extends MangaStreamTemplate {
   final List<String> testUrls;
 
   @override
+  Uri get baseUri => Uri.parse('http://localhost:3000');
+
+  @override
   Dio get dioClient => Dio();
 
   @override
   Future<List<String>> getAllMangaUrls() {
     return Future.value(testUrls);
   }
-
-  @override
-  // TODO: implement mangaChapterDateFormat
-  DateFormat get mangaChapterDateFormat => throw UnimplementedError();
-
-  @override
-  // TODO: implement mangaChapterDateSelector
-  String get mangaChapterDateSelector => throw UnimplementedError();
-
-
-  @override
-  // TODO: implement mangaChapterTitleSelector
-  String get mangaChapterTitleSelector => throw UnimplementedError();
-
-  @override
-  // TODO: implement mangaChapterUrlSelector
-  String get mangaChapterUrlSelector => throw UnimplementedError();
-
-  @override
-  String? mangaChapterExtractChapterNumber(Element element) {
-    // TODO: implement mangaChapterExtractChapterNumber
-    throw UnimplementedError();
-  }
-
-  @override
-  // TODO: implement mangaChapterNumberSelector
-  String get mangaChapterNumberSelector => throw UnimplementedError();
-  
-  @override
-  // TODO: implement mangaListModeUrl
-  String get mangaListModeUrl => throw UnimplementedError();
 }

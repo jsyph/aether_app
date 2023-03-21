@@ -6,7 +6,8 @@ part of 'manga_database_item_status.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ReleaseStatusAdapter extends TypeAdapter<MangaDatabaseReleaseStatus> {
+class MangaDatabaseReleaseStatusAdapter
+    extends TypeAdapter<MangaDatabaseReleaseStatus> {
   @override
   final int typeId = 2;
 
@@ -65,7 +66,7 @@ class ReleaseStatusAdapter extends TypeAdapter<MangaDatabaseReleaseStatus> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ReleaseStatusAdapter &&
+      other is MangaDatabaseReleaseStatusAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

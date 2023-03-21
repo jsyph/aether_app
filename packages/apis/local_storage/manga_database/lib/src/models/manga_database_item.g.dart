@@ -28,7 +28,7 @@ class MangaDatabaseItemAdapter extends TypeAdapter<MangaDatabaseItem> {
       (fields[8] as List).cast<double>(),
       fields[2] as MangaDatabaseItemMangaType?,
       fields[1] as String?,
-      (fields[7] as List).cast<DateTime>(),
+      (fields[7] as List).cast<DateTime?>(),
       (fields[9] as List).cast<MangaDatabaseReleaseStatus>(),
       (fields[0] as List?)?.cast<String>(),
       (fields[10] as List).cast<String>(),
@@ -117,10 +117,10 @@ MangaDatabaseItem _$MangaDatabaseItemFromJson(Map<String, dynamic> json) {
         _$MangaDatabaseItemMangaTypeEnumMap, json['content_type']),
     json['author'] as String?,
     (json['posted_on'] as List<dynamic>)
-        .map((e) => DateTime.parse(e as String))
+        .map((e) => e == null ? null : DateTime.parse(e as String))
         .toList(),
     (json['release_status'] as List<dynamic>)
-        .map((e) => $enumDecode(_$ReleaseStatusEnumMap, e))
+        .map((e) => $enumDecode(_$MangaDatabaseReleaseStatusEnumMap, e))
         .toList(),
     (json['alt_titles'] as List<dynamic>?)?.map((e) => e as String).toList(),
     (json['source_names'] as List<dynamic>).map((e) => e as String).toList(),
@@ -136,10 +136,10 @@ Map<String, dynamic> _$MangaDatabaseItemToJson(MangaDatabaseItem instance) =>
       'descriptions': instance.descriptions,
       'genres': instance.genres,
       'id': instance.id,
-      'posted_on': instance.postedOn.map((e) => e.toIso8601String()).toList(),
+      'posted_on': instance.postedOn.map((e) => e?.toIso8601String()).toList(),
       'rating': instance.rating,
       'release_status': instance.releaseStatus
-          .map((e) => _$ReleaseStatusEnumMap[e]!)
+          .map((e) => _$MangaDatabaseReleaseStatusEnumMap[e]!)
           .toList(),
       'source_names': instance.sourceNames,
       'titles': instance.titles,
@@ -151,10 +151,9 @@ const _$MangaDatabaseItemMangaTypeEnumMap = {
   MangaDatabaseItemMangaType.manhwa: 'manhwa',
   MangaDatabaseItemMangaType.manga: 'manga',
   MangaDatabaseItemMangaType.unknown: 'unknown',
-  MangaDatabaseItemMangaType.none: 'none',
 };
 
-const _$ReleaseStatusEnumMap = {
+const _$MangaDatabaseReleaseStatusEnumMap = {
   MangaDatabaseReleaseStatus.onGoing: 'on_going',
   MangaDatabaseReleaseStatus.dropped: 'dropped',
   MangaDatabaseReleaseStatus.completed: 'completed',

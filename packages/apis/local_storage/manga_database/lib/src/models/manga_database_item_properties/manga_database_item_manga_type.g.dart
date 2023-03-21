@@ -22,8 +22,6 @@ class MangaDatabaseItemMangaTypeAdapter
         return MangaDatabaseItemMangaType.manga;
       case 3:
         return MangaDatabaseItemMangaType.unknown;
-      case 4:
-        return MangaDatabaseItemMangaType.none;
       default:
         return MangaDatabaseItemMangaType.manhua;
     }
@@ -43,9 +41,6 @@ class MangaDatabaseItemMangaTypeAdapter
         break;
       case MangaDatabaseItemMangaType.unknown:
         writer.writeByte(3);
-        break;
-      case MangaDatabaseItemMangaType.none:
-        writer.writeByte(4);
         break;
     }
   }

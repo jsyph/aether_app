@@ -78,13 +78,7 @@ abstract class MangaSourceBase
 
       _logger.v('finished parsing document');
 
-      final parsedResult = await compute(
-        (args) => _processMangaInformation(
-          args.first as Document,
-          args.last as String,
-        ),
-        {parsedDocument, url},
-      );
+      final parsedResult = processMangaInformation(parsedDocument, url);
 
       _logger.v(parsedResult);
 
@@ -94,14 +88,15 @@ abstract class MangaSourceBase
     }
   }
 
-  String get baseUrl;
+  Uri get baseUri;
 
   /// Gets all manga urls from source
   Future<List<String>> getAllMangaUrls();
 
+  /// Returns stream of mangaInformation one by one
   Stream<MangaInformation> getRecentlyAddedManga();
 
-  MangaInformation _processMangaInformation(
+  MangaInformation processMangaInformation(
       Document parsedDocument, String url) {
     // ─────────────────────────────────────────────────────────────
 
