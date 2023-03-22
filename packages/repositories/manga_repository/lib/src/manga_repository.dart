@@ -3,73 +3,15 @@ import 'package:manga_database/manga_database.dart';
 import 'package:manga_sources/manga_sources.dart';
 import 'package:matrix2d/matrix2d.dart';
 
+import 'database_methods.dart';
 import 'models/models.dart';
 
 class MangaRepository {
   MangaRepository._();
 
+  final database = DatabaseFunctions(_mangaDb);
+
   static LocalMangaDatabase? _nullableMangaDb;
-
-  // Future<void> exportAsJson(String path) async {}
-
-  Stream<MangaInformation> downloadMangaDatabase() async* {
-    final allMangaStream = AllMangaSources.getAllManga();
-
-    await for (final mangaData in allMangaStream) {
-      final mangaInformation = MangaInformation(
-        altTitles: mangaData.info.altTitles,
-        author: mangaData.info.author,
-        contentType:
-            MangaContentType.parse(mangaData.info.contentType.toString()),
-        coverImageUrl: mangaData.info.coverImageUrl,
-        datePostedOn: mangaData.info.datePostedOn,
-        description: mangaData.info.description,
-        genres: mangaData.info.genres,
-        rating: mangaData.info.rating,
-        releaseStatus:
-            MangaReleaseStatus.parse(mangaData.info.releaseStatus.toString()),
-        sourceName: mangaData.sourceName,
-        title: mangaData.info.title,
-        url: mangaData.info.url,
-      );
-
-      _mangaDb.addManga(
-        sourceName: mangaInformation.sourceName,
-        title: mangaInformation.title,
-        altTitles: mangaInformation.altTitles,
-        description: mangaInformation.description,
-        genres: mangaInformation.genres,
-        rating: mangaInformation.rating,
-        url: mangaInformation.url,
-        coverImageUrl: mangaInformation.coverImageUrl,
-        contentType: mangaInformation.contentType.toString(),
-        author: mangaInformation.author,
-        datePostedOn: mangaInformation.datePostedOn,
-        releaseStatus: mangaInformation.releaseStatus.toString(),
-      );
-    }
-  }
-
-  // Future<void> loadFromRemote() async {}
-
-  Future<List<MangaSearchResult>> fuzzySearch(String query) async {
-    final fuzzySearchResults = await _mangaDb.fuzzyTitleSearch(query);
-
-    List<MangaSearchResult> searchResults = [];
-    for (final fuzzySearchResult in fuzzySearchResults) {
-      searchResults.add(
-        MangaSearchResult(
-          // currently it sets the first title added to record as the title returned
-          fuzzySearchResult.titles,
-          fuzzySearchResult.coverImages,
-          fuzzySearchResult.rating,
-          fuzzySearchResult.altTitles,
-        ),
-      );
-    }
-
-    return searchResults;
-  }
 
   /// Get the manga information page that contains all manga information and all chapters in a vector
   Future<MangaInformationPage> getMangaInformationPage(String mangaId) async {
