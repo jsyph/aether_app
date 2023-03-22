@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:app_logging/app_logging.dart';
-import 'package:compute/compute.dart';
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
@@ -11,7 +10,7 @@ import 'manga_chapter_methods.dart.dart';
 import 'manga_information_methods.dart';
 
 /// Base lass that all manga sources extend
-abstract class MangaSourceBase
+abstract class MangaSource
     with MangaInformationAbstractMethods, MangaChapterAbstractMethods {
   final _logger = AppLogger();
 
@@ -172,4 +171,21 @@ abstract class MangaSourceBase
       url: url,
     );
   }
+
+  Future<List<String>> getChapterImages(String chapterUrl) async {
+    final response = await dioClient.get(chapterUrl);
+
+    final parsedDocument = parse(response.data);
+
+    final allChapterImageElements =
+        parsedDocument.querySelectorAll(chapterImageSelector);
+
+    return allChapterImageElements
+        .map(
+          (e) => e.attributes['src']!,
+        )
+        .toList();
+  }
+
+  String get chapterImageSelector;
 }

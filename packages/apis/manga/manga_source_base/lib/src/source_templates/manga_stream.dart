@@ -6,7 +6,10 @@ import 'package:intl/intl.dart';
 import '../html_extension.dart';
 import '../source_base/source_base.dart';
 
-abstract class MangaStreamTemplate extends MangaSourceBase {
+abstract class MangaStreamTemplate extends MangaSource {
+  @override
+  String get chapterImageSelector => 'div#readerarea > p > img';
+
   @override
   Future<List<String>> getAllMangaUrls() async {
     final response =

@@ -13,7 +13,7 @@ class AllMangaSources {
     VoidScans(),
   ];
 
-  static MangaSourceBase getSourceFromString(String sourceName) {
+  static MangaSource getSourceFromString(String sourceName) {
     for (final source in allSources) {
       if (source.runtimeType.toString().toLowerCase() == sourceName.toLowerCase()) {
         return source;

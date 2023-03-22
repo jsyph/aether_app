@@ -11,6 +11,7 @@ class MangaRepository {
 
   final database = DatabaseFunctions(_mangaDb);
 
+  static List<List<MangaChapter>> _mangaChaptersCache = [];
   static LocalMangaDatabase? _nullableMangaDb;
 
   /// Get the manga information page that contains all manga information and all chapters in a vector
@@ -124,9 +125,57 @@ class MangaRepository {
 
     AppLogger().d(transposedChapterArrayWithoutNull);
 
+    _mangaChaptersCache = transposedChapterArrayWithoutNull;
+
     return MangaInformationPage(
       chapters: transposedChapterArrayWithoutNull,
       information: allMangaInformation,
+    );
+  }
+
+  Future<MangaChapterPage> getMangaChapterPage(
+      int chapterIndex, String sourceName) async {
+    final currentChapter = _mangaChaptersCache[chapterIndex].firstWhere(
+      (element) => element.sourceName == sourceName,
+      // if no source is found then use the first source at chapterIndex
+      orElse: () => _mangaChaptersCache[chapterIndex].first,
+    );
+
+    //  the same chapter but from another source
+    final otherSourceCurrentChapter = _mangaChaptersCache[chapterIndex]
+        .where(
+          (element) => element.sourceName != currentChapter.sourceName,
+        )
+        .toList();
+
+    late final int? nextChapterIndex;
+
+    try {
+      _mangaChaptersCache[chapterIndex + 1];
+      nextChapterIndex = chapterIndex + 1;
+    } catch (e) {
+      nextChapterIndex = null;
+    }
+
+    late final int? previousChapterIndex;
+    try {
+      _mangaChaptersCache[chapterIndex - 1];
+      previousChapterIndex = chapterIndex - 1;
+    } catch (e) {
+      previousChapterIndex = null;
+    }
+
+    final source =
+        AllMangaSources.getSourceFromString(currentChapter.sourceName);
+
+    final chapterImages = await source.getChapterImages(currentChapter.url);
+
+    return MangaChapterPage(
+      nextChapterIndex,
+      previousChapterIndex,
+      chapterImages,
+      currentChapter,
+      otherSourceCurrentChapter,
     );
   }
 

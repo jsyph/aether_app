@@ -235,6 +235,32 @@ void main() async {
               }
             },
           );
+
+          test(
+            'Test getChapterImages',
+            () async {
+              final testClass = MangaStreamTestClass([]);
+
+              final testSites = [
+                'http://localhost:3000/manga_stream/chapter_images/test_site_1.html',
+                'http://localhost:3000/manga_stream/chapter_images/test_site_2.html',
+                'http://localhost:3000/manga_stream/chapter_images/test_site_3.html',
+              ];
+
+              final expectedNumberOfImages = [14, 10, 19];
+              for (int i = 0; i < testSites.length; i++) {
+                final allImages =
+                    await testClass.getChapterImages(testSites[i]);
+
+                expect(
+                  allImages.length,
+                  equals(
+                    expectedNumberOfImages[i],
+                  ),
+                );
+              }
+            },
+          );
         },
       );
     },

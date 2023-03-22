@@ -1,4 +1,5 @@
 export 'manga_chapter.dart';
+export 'manga_chapter_page.dart';
 export 'manga_content_type.dart';
 export 'manga_information.dart';
 export 'manga_information_page.dart';
