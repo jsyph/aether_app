@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:logger/logger.dart';
+import 'package:app_logging/app_logging.dart';
 
 /// Limits the number of requests sent by the dio client
 /// `allowedRequests` is the number of requests per `perTime` in seconds
@@ -15,7 +15,7 @@ class RateInterceptor extends Interceptor {
   // persists across all instances created
   static int? _previousRequestTimeTag;
 
-  final _logger = Logger();
+  final _logger = AppLogger();
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {

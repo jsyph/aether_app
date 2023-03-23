@@ -1,8 +1,7 @@
 name: manga_database
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
+description: houses the code responsible for the manga database
+version: 0.1.0
 publish_to: none
-# repository: https://github.com/my_org/my_repo
 environment:
   sdk: ">=2.19.2 <3.0.0"
 
@@ -15,7 +14,6 @@ dev_dependencies:
 dependencies:
   app_logging:
     path: ../../../utilities/app_logging
-  collection: 1.17.0
   hive: ^2.2.3
   json_annotation: ^4.8.0
   json_serializable: ^6.6.1

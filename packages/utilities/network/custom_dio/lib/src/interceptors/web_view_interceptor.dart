@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:logger/logger.dart';
+import 'package:app_logging/app_logging.dart';
 
 class WebViewInterceptor extends Interceptor {
-  final logger = Logger();
+  final logger = AppLogger();
 
   @override
   void onRequest(

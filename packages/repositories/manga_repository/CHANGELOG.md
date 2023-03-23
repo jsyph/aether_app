@@ -1,3 +1,5 @@
-## 1.0.0
+## 0.1.0
 
-- Initial version.
+- adopt proper versioning practices
+- Modify readme
+- idk

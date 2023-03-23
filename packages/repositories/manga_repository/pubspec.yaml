@@ -1,6 +1,6 @@
 name: manga_repository
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
+description: Contains simplified api, ready to be used by the bloc layer
+version: 0.1.0
 publish_to: none
 
 environment:

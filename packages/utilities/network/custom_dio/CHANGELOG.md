@@ -1,3 +1,5 @@
-## 1.0.0
+## 0.1.0
 
-- Initial version.
+- use proper versioning
+- Use `app_logging` instead of `logging` packages for logging
+- modify readme

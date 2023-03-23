@@ -1,14 +1,15 @@
 name: custom_dio
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+description: Has extensions for dio that add interceptors
+version: 0.0.1
+publish_to: none
 environment:
   sdk: ">=2.19.2 <3.0.0"
 
 dependencies:
   dio: ^5.0.1
   flutter_inappwebview: ^5.7.2+3
-  logger: ^1.2.2
+  app_logging:
+    path: ../../app_logging
 
 dev_dependencies:
   alfred: ^1.0.0+1

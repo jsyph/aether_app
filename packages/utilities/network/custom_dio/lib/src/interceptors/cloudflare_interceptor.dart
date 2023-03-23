@@ -3,9 +3,9 @@ import 'dart:math';
 
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:dio/dio.dart';
-import 'package:logger/logger.dart';
+import 'package:app_logging/app_logging.dart';
 
-final _logger = Logger();
+final _logger = AppLogger();
 
 //!! Sometimes cloudflare doesn't get bypassed, but it works sometimes ¯\_(ツ)_/¯
 /// Resolves cloudflare protection on website

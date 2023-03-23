@@ -3,7 +3,6 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 
-import '../html_extension.dart';
 import '../source_base/source_base.dart';
 
 abstract class MangaStreamTemplate extends MangaSource {
@@ -156,10 +155,10 @@ abstract class MangaStreamTemplate extends MangaSource {
 
   @override
   DateTime? mangaInfoExtractDateReleasedOn(Document parsedDocument) {
-    final dateReleasedText = parsedDocument.getQueryAttribute(
-      'div > div > span > time',
-      'datetime',
-    );
+    final dateReleasedElement =
+        parsedDocument.querySelector('div > div > span > time');
+
+    final dateReleasedText = dateReleasedElement!.attributes['datetime'];
 
     return DateTime.parse(dateReleasedText!);
   }
