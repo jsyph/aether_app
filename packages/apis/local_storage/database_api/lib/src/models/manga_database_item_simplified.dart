@@ -1,8 +1,8 @@
 import 'models.dart';
 
 /// Contains the record information for a source from a MangaDatabaseItem
-class MangaDatabaseItemFilterResult {
-  MangaDatabaseItemFilterResult({
+class MangaDatabaseItemSimplified {
+  MangaDatabaseItemSimplified({
     required this.altTitles,
     required this.author,
     required this.contentType,

@@ -19,3 +19,5 @@ dependencies:
   json_serializable: ^6.6.1
   uuid: ^3.0.7
   woozy_search: ^2.0.3
+  database_api:
+    path: ../database_api

@@ -184,5 +184,9 @@ class MangaRepository {
     return MangaRepository._();
   }
 
+  static registerDatabaseAdapters() {
+    LocalMangaDatabase.registerHiveAdapters();
+  }
+
   static LocalMangaDatabase get _mangaDb => _nullableMangaDb!;
 }

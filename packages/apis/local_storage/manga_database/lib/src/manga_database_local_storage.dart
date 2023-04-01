@@ -1,10 +1,10 @@
 import 'package:app_logging/app_logging.dart';
+import 'package:database_api/database_api.dart';
 import 'package:hive/hive.dart';
 import 'package:woozy_search/woozy_search.dart';
 
 import 'manga_database_error.dart';
 import 'manga_database_item_key.dart';
-import 'models/models.dart';
 
 const _databaseName = 'manga_database';
 

@@ -107,14 +107,14 @@ class MangaDatabaseItem extends HiveObject {
   }
 
   /// Get data from record that belongs to a source
-  MangaDatabaseItemFilterResult filter(String sourceName) {
+  MangaDatabaseItemSimplified filter(String sourceName) {
     final sourceIndex = sourceNames.indexOf(sourceName);
 
     if (sourceIndex == -1) {
       throw MangaSourceNotFoundException('$sourceName is not found');
     }
 
-    return MangaDatabaseItemFilterResult(
+    return MangaDatabaseItemSimplified(
       altTitles: altTitles,
       author: author,
       contentType: contentType,
@@ -132,8 +132,8 @@ class MangaDatabaseItem extends HiveObject {
   }
 
   /// returns all record information as a list of MangaDatabaseItemFilterResult
-  List<MangaDatabaseItemFilterResult> toList() {
-    List<MangaDatabaseItemFilterResult> results = [];
+  List<MangaDatabaseItemSimplified> toList() {
+    List<MangaDatabaseItemSimplified> results = [];
     for (final sourceName in sourceNames) {
       results.add(filter(sourceName));
     }
